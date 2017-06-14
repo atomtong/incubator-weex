@@ -1,0 +1,40 @@
+<template>
+  <div>
+    <text >TC_RichText_A_Span_Img</text>
+    <richtext class="richtext">
+        <span>{{textstyle}}</span>
+        <a href="http://g.tbcdn.cn/ali-wireless-h5/res/0.0.16/hello.js">
+          <image class="logo" src="https://img.alicdn.com/tps/i2/TB1hRb1IXXXXXX3XVXXXQaP.pXX-87-87.jpeg"></image>
+          <span class="title1">TAOBAO</span>
+        </a>
+    </richtext>
+
+  </div>
+</template>
+
+<style>
+.richtext{
+  background-color: red
+}
+.logo{width: 50;height: 50;}
+.title1{font-size:42; color: #FF5400;}
+
+</style>
+
+<script>
+  module.exports = {
+    data:{
+      textstyle:"textbig",
+      test:'www.baidu.com'
+    },
+    methods:{
+      click:function(){
+        console.error("onclick")
+      }
+    }
+  }
+</script>
+
+
+
+

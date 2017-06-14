@@ -1,0 +1,58 @@
+<template>
+    <scroller class="wrapper" style="height:2000;width:750;">
+        <image src="{{logoUrl}}" class="logo" onclick="toggle"></image>
+        <text class="title">Hello {{target}}</text>
+        <div style="height:3000;width:750;"></div>
+        <mask class="mask" if="{{shown}}"  onclick="hide" style="background-color: rgba(0,0,0,0.5);top: 0px;width:750;position: absolute;height:{{screenHeight}};margin-top: 0px">
+            <div class="custorm" onclick="divclick">
+                 <text class="text" >遮罩层</text>
+            </div>
+        </mask>
+
+    </scroller>
+</template>
+
+<style>
+    .wrapper {align-items: center; margin-top: 10px;}
+    .title {font-size: 48px;}
+    .custorm {
+      background-color: rgba(255,0,0,0.3);
+      font-size: 48px;margin-top: 100px;
+      margin-left: 100px;height: 700px;
+      
+    }
+    .logo {width: 360px; height: 82px;}
+</style>
+
+<script>
+    module.exports = {
+        data: {
+            logoUrl: 'http://alibaba.github.io/weex/img/weex_logo_blue@3x.png',
+            target: 'World',
+            shown:false,
+            screenHeight: 0
+        },
+        ready: function () {
+            this.screenHeight = this.$getConfig().env.deviceHeight ;
+        },
+        methods: {
+            update: function (e) {
+                this.target = 'Weex'
+            },
+            toggle: function () {
+                this.shown = true
+                var modal = require('@weex-module/modal');
+                modal.toast({
+                  'message': "click~",
+                  'duration': 2
+                });
+            },
+            hide: function () {
+                this.shown = false
+            },
+            divclick: function (e) {  //必须加这个，由于native没有加事件冒泡
+                this.target = 'Weex'
+            }
+        }
+    }
+</script>

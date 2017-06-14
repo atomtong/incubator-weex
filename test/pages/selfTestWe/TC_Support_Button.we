@@ -1,0 +1,36 @@
+<template>
+    <div class="btn border" flagid="{{flagid}}" onclick="{{btnTouch}}">
+      <text class="title font">{{title}}</text>
+    </div>
+</template>
+
+<style>
+  .btn {
+    width:400;
+    height:50;
+    background-color:#EEEEEE;
+    justify-content: center;
+  }
+
+  .title {
+    font-size:20;
+    text-align: center;
+  }
+  
+  .border {
+    border-width: 1;
+    border-color: #696969;
+    border-style:solid;
+    border-radius:5;
+  }
+
+  .font{font-family: Times New Roman;}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      title:'Button Click'
+    },
+  }
+</script>

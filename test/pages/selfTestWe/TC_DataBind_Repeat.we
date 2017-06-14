@@ -1,0 +1,56 @@
+<template>
+  
+    <TC_Support_Scroller>
+      <TC_Support_MainTitle title="TC_DataBind_Repeat"></TC_Support_MainTitle>
+      <TC_Support_SubTitle title="01.Repeat"></TC_Support_SubTitle>
+      <div class="component {{boder}}" repeat="{{itemList}}">
+        <image class="img" src="{{imgUrl}}"></image>
+        <text class="text font">{{title}}</text>
+      </div>
+    </TC_Support_Scroller>
+</template>
+
+<style>
+
+
+.font{font-family: Times New Roman;}
+  .component {
+    margin: 10;
+    flex-direction: row;
+    align-items:center;
+  }
+  .border-green {
+    border-width: 5;
+    border-style: solid;
+    border-color: #00FF00;
+  }
+  .border-pink {
+    border-width: 5;
+    border-style: solid;
+    border-color: #FF00FF;
+  }
+  .text {
+    height:30;
+    border-width: 1;
+    border-style:solid;
+    margin:2;
+    padding-left:5;
+    font-size:20
+  }
+  .img {
+    margin: 2;
+    width: 400;
+    height: 400;
+  }
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      itemList:[
+        {boder:'border-green', title:'~\(≧▽≦)/~beautiful scenery', imgUrl:'https://gd2.alicdn.com/imgextra/i2/TB1ThbXIVXXXXbNXFXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg'},
+        {boder:'border-pink', title:'~\(≧▽≦)/~beautiful food', imgUrl:'https://img.alicdn.com/bao/uploaded/i3/TB1lauIKXXXXXXQXXXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg'}
+        ]
+    }
+  }
+</script>

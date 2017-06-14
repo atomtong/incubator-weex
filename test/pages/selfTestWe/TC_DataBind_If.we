@@ -1,0 +1,96 @@
+<we-element name="demo-child">
+  <template>
+    <div class="box">
+      <text class="label">name:</text>
+      <text class="name" if="{{info.show}}">{{info.title}}</text>
+    </div>
+  </template>
+
+  <style>
+    .box {
+       flex-direction: row;
+    }
+    .label {
+        flex:1;
+        height: 100;
+        background-color: #ffff00;
+    }
+    .name {
+      flex:1;
+      height: 100;
+      background-color: #ff0000;
+    }
+  </style>
+
+  <script>
+    module.exports = {
+      data: {
+      }
+    }
+  </script>
+</we-element>
+
+<template>
+  
+  <TC_Support_Scroller>
+    <TC_Support_MainTitle title="TC_DataBind_If"></TC_Support_MainTitle>
+    <TC_Support_SubTitle title="01.if in scroller"></TC_Support_SubTitle>
+    <div style="margin: 10">
+      <TC_Support_Button style="margin:5" flagid="btn-if" title="Toggle in scroller" onclick="toggle"></TC_Support_Button>
+      <image class="img" src={{imgUrl}} if="{{shown}}"></image>
+    </div>
+
+    <TC_Support_SubTitle title="02.child use if in list"></TC_Support_SubTitle>
+    <list class="list">
+      <cell style="margin: 10;"> 
+        <TC_Support_Button style="margin:5" title="Toggle in List" onclick="onItemClick"></TC_Support_Button>
+        <demo-child info="{{info}}"></demo-child>
+      </cell>
+    </list>
+
+    </TC_Support_Scroller>
+</template>
+
+<style>
+
+
+.list{width:500;height:200;border-width: 5; border-color: #8DB6CD;border-style:solid;}
+  .text {
+    height:30;
+    border-width: 1;
+    border-style:solid;
+    margin:2;
+    padding-left:5;
+    font-size:20
+  }
+  .img {
+    margin: 2;
+    width: 400;
+    height: 100;
+  }
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      shown: true,
+      imgUrl: 'https://gd2.alicdn.com/imgextra/i2/TB1ThbXIVXXXXbNXFXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg',
+      info: {
+            show:true,
+            title: "this is a text"
+          }
+    },
+    methods: {
+      toggle: function () {
+        this.shown = !this.shown
+      },
+      onItemClick: function() {
+              if(this.info.show == false){
+                this.info.show = true;
+              }else{
+                this.info.show = false;
+              }
+            }
+    }
+  }
+</script>

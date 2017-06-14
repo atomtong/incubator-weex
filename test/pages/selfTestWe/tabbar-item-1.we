@@ -1,0 +1,147 @@
+<template>
+  <scroller>
+      <wxc-panel title="当前页面：必抢">
+        <text class='btn' style="width:500" onclick="push">分会场</text>
+      </wxc-panel>
+      <wxc-panel title="setTitle">
+        <text class='btn' style="width:500" onclick="setTitle">设置标题</text>
+      </wxc-panel>
+
+      <wxc-panel title="place holder">
+        <text style='width: 400;height: 80;left: 100;background-color: #00ff00;margin: 10'>place holder 1</text>
+        <text style='width: 400;height: 80;left: 100;background-color: #00ff00;margin: 10'>place holder 2</text>
+        <text style='width: 400;height: 80;left: 100;background-color: #00ff00;margin: 10'>place holder 3</text>
+        <text style='width: 400;height: 80;left: 100;background-color: #00ff00;margin: 10'>place holder 4</text>
+        <text style='width: 400;height: 80;left: 100;background-color: #00ff00;margin: 10'>place holder 5</text>
+        <text style='width: 400;height: 80;left: 100;background-color: #00ff00;margin: 10'>place holder 6</text>
+        <text style='width: 400;height: 80;left: 100;background-color: #00ff00;margin: 10'>place holder 7</text>
+        <text style='width: 400;height: 80;left: 100;background-color: #00ff00;margin: 10'>place holder 8</text>
+        <text style='width: 400;height: 80;left: 100;background-color: #00ff00;margin: 10'>place holder 9</text>
+        <text style='width: 400;height: 80;left: 100;background-color: #00ff00;margin: 10'>place holder 10</text>
+        <text style='width: 400;height: 80;left: 100;background-color: #00ff00;margin: 10'>place holder 11</text>
+        <text style='width: 400;height: 80;left: 100;background-color: #00ff00;margin: 10'>place holder 12</text>
+      </wxc-panel>
+      
+  </scroller>
+</template>
+
+<style>
+  .btn {
+    width: 400;
+    height: 80;
+    background-color: rgb(92, 184, 92);
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 15px;
+  }
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      navBarHeight: 88,
+      url: '',
+      title: 'Navigator',
+      dir: 'examples',
+      baseURL: '',
+    },
+    created: function() {
+        this.$getConfig(function (config) {
+            var env = config.env;
+            if(env.platform == 'iOS'){
+              var scale = env.scale;
+              var deviceWidth = env.deviceWidth / scale;
+              this.navBarHeight = 64.0 * 750.0 / deviceWidth;
+            }   
+        }.bind(this));
+
+        this.$on('naviBar.rightItem.click',function(e){
+          duration = 2;
+          this.$call('modal', 'toast', {
+            'message': 'naviBar.rightItem.click',
+            'duration': duration
+           });
+        });
+
+        this.$on('naviBar.leftItem.click',function(e){
+          duration = 2;
+          this.$call('modal', 'toast', {
+            'message': 'naviBar.leftItem.click',
+            'duration': duration
+           });  
+        });
+
+        var bundleUrl = this.$getConfig().bundleUrl;
+        bundleUrl = new String(bundleUrl);
+        console.log('hit', bundleUrl);
+        var nativeBase;
+        var isAndroidAssets = bundleUrl.indexOf('file://assets/') >= 0;
+
+        var isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0;
+        if (isAndroidAssets) {
+          nativeBase = 'file://assets/';
+        }
+        else if (isiOSAssets) {
+          // file:///var/mobile/Containers/Bundle/Application/{id}/WeexDemo.app/
+          // file:///Users/{user}/Library/Developer/CoreSimulator/Devices/{id}/data/Containers/Bundle/Application/{id}/WeexDemo.app/
+          nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf('/') + 1);
+        }
+        else {
+          var host = 'localhost:12580';
+          var matches = /\/\/([^\/]+?)\//.exec(this.$getConfig().bundleUrl);
+          if (matches && matches.length >= 2) {
+            host = matches[1];
+          }
+          nativeBase = 'http://' + host + '/' + this.dir + '/build/';
+        }
+        var h5Base = './index.html?page=./' + this.dir + '/build/';
+        // in Native
+        var base = nativeBase;
+        if (typeof window === 'object') {
+          // in Browser or WebView
+          base = h5Base;
+        }
+        this.baseURL = base;     
+    },
+    methods: {
+      ready: function (e) {
+        // 1.set url
+        var vm = this;
+        var appConfig = vm.$getConfig();
+        var bundleUrl = appConfig.bundleUrl;
+        var tplIndex = bundleUrl.indexOf("_wx_tpl=");
+        var navUrl="";
+        if(tplIndex>= 0){
+          navUrl = bundleUrl.substring(tplIndex + 8);
+        }else{
+          navUrl = bundleUrl;
+        }
+        var lastIndex = navUrl.lastIndexOf('build/');
+        var prifixUrl = navUrl.substring(0,lastIndex + 6);
+        vm.url = prifixUrl + 'navigator-demo1.js?wh_weex=true'
+      },
+      push: function() {
+        var vm = this;
+        var params = {
+          'url':  vm.url,
+          'animated' : 'true',
+        }
+        vm.$call('navigator','push',params, function () {});
+      },
+
+      setTitle: function() {
+        var param = {
+        // 要设置的页面标题
+        title: '必抢'
+        };
+
+      var navigator = require('@weex-module/navigator');
+      navigator.setNavBarTitle(param, function(e){
+        console.log(e);
+      }); 
+      },
+    }
+  }
+</script>

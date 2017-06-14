@@ -1,0 +1,109 @@
+<template>
+  <scroller onclickmoreitem="onclickmoreitem" onclickRightItem="onclickRightItem" style='background-color: #F5F5F5'>
+    <TC_Support_MainTitle title="TC_BizModule_NavigationBar"></TC_Support_MainTitle>
+    
+    <TC_Support_SubTitle title="navigationBar"></TC_Support_SubTitle>
+    <text class='btn' repeat='navigationBarList' onclick="navigationBar(apiName,params)">{{title}}</text>
+
+    <TC_Support_SubTitle title="navigator"></TC_Support_SubTitle>
+    <text class='btn' repeat='navigatorList' onclick="navigator(apiName,params)">{{title}}</text>
+
+    <TC_Support_SubTitle title="pageInfo"></TC_Support_SubTitle>
+    <text class='btn' repeat='pageInfoList' onclick="pageInfo(apiName,params)">{{title}}</text>
+
+    <TC_Support_SubTitle title="event"></TC_Support_SubTitle>
+    <text class='btn' repeat='eventList' onclick="event(apiName,params)">{{title}}</text>
+  </scroller>
+</template>
+
+<style>
+  .btn {
+    width: 500;
+    height: 60;
+    background-color: rgb(92, 184, 92);
+    padding: 20;
+    font-size:20;
+    border-radius: 15px;
+    margin-left: 50;
+    margin-top: 20;
+  }
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      navigationBarList: [
+        {
+          apiName : 'setFestivalStyle',
+          params : {'naviBar':'festival'},
+          title : '设置节日氛围',
+        },
+        {
+          apiName : 'setFestivalStyle',
+          params : {'naviBar':'none'},
+          title : '隐藏节日氛围',
+        },
+        {
+          apiName : 'setTitle',
+          params : 'set title by navigationBar',
+          title : '设置标题',
+        },
+      ],
+      navigatorList:[
+        {
+          apiName:'push',
+          title:'push to weex页面',
+          params:{
+            'url': 'https://pre-wormhole.tmall.com/wow/portal/act/db11-router?wh_weex=true&wh_system_time=2016-10-24%2000:00:04',
+            'animated' : 'true',
+          }
+        },
+        {
+          apiName:'push',
+          title:'push to 非weex页面',
+          params:{
+            'url': 'https://www.tmall.com/',
+            'animated' : 'true',
+            }
+        },
+      ],
+      pageInfoList:[
+        {
+          apiName : 'setTitle',
+          params : 'set title by pageInfo',
+          title : '设置navbar标题',
+        },
+      ],
+      eventList: [
+        {
+          apiName : 'openURL',
+          params : 'http://t.cn?_wx_tpl=http://h5.waptest.taobao.com/app/weextc/build/TC__Index.js',
+          title : 'openURL',
+        },
+        {
+          apiName : 'setTitle',
+          params : 'set title by event',
+          title : '设置navbar标题',
+        },
+      ],
+    },
+    methods: {
+      navigationBar: function(apiName, params) {
+        var navigationBarModule = require('@weex-module/navigationBar');
+        navigationBarModule[apiName](params, function(e){}, function(e){});
+      },
+      navigator: function(apiName, params) {
+        var navigatorModule = require('@weex-module/navigator');
+        navigatorModule[apiName](params, function(e){});
+      },
+      pageInfo :function(apiName,params) {
+        var pageInfoModule = require('@weex-module/pageInfo');
+        pageInfoModule[apiName](params);
+      },
+      event :function(apiName,params) {
+        var pageInfoModule = require('@weex-module/event');
+        pageInfoModule[apiName](params);
+      },
+    }
+  }
+</script>

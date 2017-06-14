@@ -1,0 +1,93 @@
+<template>
+  
+  <TC_Support_Scroller>
+    <TC_Support_MainTitle title="TC_Modal_Alert"></TC_Support_MainTitle>
+    <div class="block test-div">
+      <text class="text-click font" onclick="callAlert" message="okTitle default" oktitle="" >okTitle default</text>
+      <text class="text-click font" onclick="callAlert" message="alert test" oktitle="hello">okTitle hello</text>
+      <text class="text-click font" onclick="callAlert" message="This is a long message that we can describe complicated info. however,we just want to test it" oktitle="much message" >much message</text>
+      <text class="text-click font" onclick="callAlert" message="much okTitle" oktitle="yes,ok button use so long info is not suitable,we just want to test it" >much okTitle</text>
+      <text class="text-click font" onclick="callAlert" message="">message is null</text>
+    </div>
+    <div class="block test-div">
+      <text class="log-text font" repeat="{{logList}}">{{logMessage}}</text>
+    </div>
+    
+    
+     </TC_Support_Scroller>
+</template>
+
+
+<style>
+.discript {flex: 1; color: #000000; font-weight: bold; font-size:30;background-color: #37dd23;overflow:hidden;font-family: Times New Roman;}
+
+
+
+  .font{font-family: Times New Roman;font-size: 30;}
+  .test-div{
+    margin-top: 5;
+    font-size: 35;
+    background-color:#FAEBD7;
+    padding-bottom: 10;
+  }
+  .log-title{
+    background-color: red;
+    font-size: 30;
+    width:200;
+    height:40;
+    position:fixed;
+    right:20;
+    top:15;
+    text-align: center;
+  }
+  .log-text{
+    font-size: 20;
+    margin-top: 5;
+    margin-left: 5;
+    margin-right: 5;
+  }
+  .test-title{
+    color: red;
+    font-size: 30;
+    font-weight: bold;
+  }
+  .text-click{
+    color:#1E90FF;
+    border-color: #1E90FF;
+    border-width: 3;
+    margin-top: 10;
+    margin-left: 5;
+    margin-right: 5;
+    font-size:30;
+  }
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      logList: [
+        ]
+    },
+    
+    methods: {
+      callAlert:function(e){
+        var message = e.target.attr.message;
+        var value = e.target.attr.value;
+        var okTitle = e.target.attr.oktitle;
+        var params = {
+          'message':message,
+          'okTitle':okTitle,
+        }
+        var self = this;
+        this.$call('modal','alert',params, function() {
+          self.logList.push({ logMessage:"close alert: " + value});
+        });
+        this.logList.push({logMessage:"open alert: " + value});
+      },
+      
+      clearLog:function(){
+        this.logList=[];
+      }
+    }
+  }
+</script>

@@ -1,0 +1,12 @@
+<style>
+   .sub-title-div {background-color: #E0EEE0;height: 35;margin-top:3;margin-bottom: 2;}
+   .sub-title {flex: 1; color: #000000;font-size:25; font-weight: bold; overflow: visible;font-family: Times New Roman; margin-top: 4;margin-left: 10;}
+   .font{font-family: Times New Roman;}
+</style>
+
+<template>
+	<!--  TC_Support_SubTitle  -->
+    <div class="sub-title-div">
+      <text class="sub-title font">{{title}}</text>
+    </div>
+</template>

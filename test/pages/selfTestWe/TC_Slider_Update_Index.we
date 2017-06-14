@@ -1,0 +1,82 @@
+<template>
+	<scroller style="flex-direction: column; background-color: #ffffff;width:750;height:1000;border-width: 3;border-color: #00ff00;">
+		<TC_Support_MainTitle title="AG_Slider_Slider_Index"></TC_Support_MainTitle>
+		<div style="height:592; border-width:3; border-style:solid; border-color:#FF00FF;margin:10;">
+		<slider style="height:400;width:700;background-color:#FFFFDF;" auto-play="false" index="{{attr_index}}" onchange="change">
+		<div>
+			<image style="width:700;background-color:#FFFFDF;height:400;" src="https://gd1.alicdn.com/bao/uploaded/i1/TB1PXJCJFXXXXciXFXXXXXXXXXX_!!0-item_pic.jpg"></image>			
+		</div>
+		<div>
+			<image style="width:700;background-color:#FFFFDF;height:400;" src="https://gd3.alicdn.com/bao/uploaded/i3/TB1x6hYLXXXXXazXVXXXXXXXXXX_!!0-item_pic.jpg"></image>			
+		</div>
+		<div>
+			<image style="width:700;background-color:#FFFFDF;height:400;" src="https://gd2.alicdn.com/bao/uploaded/i2/T14H1LFwBcXXXXXXXX_!!0-item_pic.jpg"></image>			
+		</div>
+			<indicator style="height:60;position:absolute;bottom:40;width:700;background-color:rgba(128,128,128,0.5);left:0;itemSelectedColor:#0000FF;itemSize:20;itemColor:#FF0000;"></indicator>
+		</slider>
+		</div>
+		<scroller style="height:296; border-width:3; border-style:solid; border-color:#FF00FF;margin:10;">
+			<TC_Support_SubTitle title="index"></TC_Support_SubTitle>
+			<div repeat="btnList2100" style="flex-direction:row">
+				<text onclick="update2100" flagid="{{index}}" repeat="row" style="width:210; height:50;text-align: center; border-width: 1;border-color: #696969;border-style:solid;border-radius:5; margin:10; background-color: {{bgc}}">{{value}}</text>
+			</div>
+			<div style="width:680; margin-left:20; margin-top:20;">
+				<text style="lines:0;margin-bottom:20;font-size:24; color:#FF0000;background-color:#EEEEEE; border-width:3;border-style:dashed; border-color:#00FF00">{{log_content}}</text>
+			</div>
+		</scroller>
+	</scroller>
+</template>
+
+
+<script>
+	module.exports = {
+		data : {
+			log_content:'',
+			attr_index:0,
+			btnList2100: [
+				{row:
+					[
+						{value: "0",bgc:'#EEEEEE',index:0},
+						{value: "2",bgc:'#EEEEEE',index:1},
+					],
+				},
+			],
+		},
+		methods : {
+			change: function (e) {
+				this.log_content = ''
+				this.attr_index = e.index
+				this.log_content += 'e.index:' + JSON.stringify(e.index) + '\r\n'
+				this.log_content += 'e.target.attr.index:' + JSON.stringify(e.target.attr.index) + '\r\n'
+				this.log_content += 'attr_index:' + JSON.stringify(this.attr_index) + '\r\n'
+			},
+			update2100: function (e) {
+				var self = this
+				var index = e.target.attr.flagid
+				for (var i = 0; i < self.btnList2100.length; i++) {
+					var row=self.btnList2100[i];
+					var columnlist=row.row;
+					for (var j = 0; j < columnlist.length; j++) {
+						var column=columnlist[j];
+						if (column.index === index) {
+							column.bgc = '#B2DFEE'
+							switch (index) {
+								case 0:
+									self.attr_index=0;
+									break;
+								case 1:
+									self.attr_index=2;
+									break;
+								default:
+									break;
+							}
+						}
+						else {
+							column.bgc = '#EEEEEE'
+						}
+					}
+				}
+			},
+		},
+	}
+</script>

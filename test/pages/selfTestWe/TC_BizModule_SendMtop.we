@@ -1,0 +1,72 @@
+<template>
+  <scroller style="flex-direction: column;">
+  	<TC_Support_MainTitle title="TC_BizModule_SendMtop"></TC_Support_MainTitle>
+    <div>
+        <text class= "btn" value = '{{btntxt}}' onclick = "sendMtop"></text>
+    </div>
+    <TC_Support_SubTitle title="响应状态："></TC_Support_SubTitle>
+    <div style="flex-direction:column; margin-top:5; padding-top:5; padding-bottom:5;">
+        <text class="textarea" >{{resultType}}</text>
+    </div>
+    <TC_Support_SubTitle title="请求结果："></TC_Support_SubTitle>
+    <div style="flex-direction:column; margin-top:5; padding-top:5; padding-bottom:5;">
+        <text class="textarea">{{resultData}}</text>
+    </div>
+  </scroller>
+</template>
+
+<style>
+.btn{ width:710; font-size: 25; border-width: 3; border-color: #cccccc; padding: 5; border-style: solid;border-radius: 3; margin: 5;font-family: Times New Roman; }
+.textarea{width: 710; height: 400; font-size: 30;}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      btntxt:'点击我，发送MTop',
+      resultType:'等待结果',
+      resultData:'等待结果'
+    },
+    methods: {	
+      sendMtop:function (e) {
+        this.btntxt='已点击，等待Mtop结果';
+        var params = {
+          "api": "mtop.msp.qianggou.querybatch",
+          "v": "3.1"
+        };
+        // 预发可用该地址测试
+        // var params = {
+        //   // 请求的 API 名称
+        //   api: 'mtop.taobao.wlc.getAddressByUserID',
+        //   // 版本号
+        //   v: '1.0',
+        //   // 是否使用 POST 方式请求
+        //   post: '1',
+        //   // 请求的参数
+        //   param: {
+        //     "userid": '779096279',
+        //     "maxCount":1
+        //   }
+        // };
+        var isH5 = this.$getConfig().env.platform.toLowerCase() === 'web'
+        if (isH5) {
+          lib.mtop.config.prefix = 'api';             // mtop的前缀
+          lib.mtop.config.subDomain = 'm';            // mtop的子域
+          lib.mtop.config.mainDomain = 'taobao.com'   // mtop的主域
+        }
+        this.$sendMtop(params, function(ret) {
+          if(typeof(ret) == 'string'){
+            ret=JSON.parse(ret);
+          }
+          if (ret && ret.data) {
+             this.resultType=JSON.stringify(ret.ret);
+             this.resultData=JSON.stringify(ret.data);
+          }else{
+            this.resultType='error：MTOP无响应！';
+          }
+          this.btntxt='结果已返回，点击发送MTop';
+        }.bind(this));
+      }
+    }
+  }
+</script>

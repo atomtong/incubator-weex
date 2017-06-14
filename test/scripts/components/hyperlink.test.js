@@ -12,9 +12,11 @@ describe('weex a test', function () {
   var driver = util.createDriver(wd);
 
   before(function () {
+    util.getPageFormApp('/components/hyperlink.js')
+    
     return util.init(driver)
-      .get(util.getPage('/components/hyperlink.js'))
-      .waitForElementById("content-inside-a", util.getGETActionWaitTimeMills(), 2000)
+      // .get(util.getPage('/components/hyperlink.js'))
+      // .waitForElementById("content-inside-a", util.getGETActionWaitTimeMills(), 5000)
   });
 
   after(function () {

@@ -1,0 +1,113 @@
+<template>
+   
+  <TC_Support_Scroller>
+    <TC_Support_MainTitle title="TC_Style_Border"></TC_Support_MainTitle>
+    <div class="row">
+      <text class="item mrg border style-dashed font">style-dashed</text>
+      <div class="item mrg border style-dashed"></div>
+      <image class="item mrg border style-dashed" src="https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg"></image>
+    </div>
+    <div class="row">
+      <text class="item mrg border style-dotted font">style-dotted</text>
+      <div class="item mrg border style-dotted"></div>
+      <image class="item mrg border style-dotted" src="https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg"></image>
+    </div>
+    <div class="row">
+      <text class="item mrg border radius-20 font">radius=20&lt;H/2</text>
+      <div class="item mrg border radius-20"></div>
+      <image class="item mrg border radius-20" src="https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg"></image>
+    </div>
+    <div class="row">
+      <text class="item mrg border radius-55 font"> H/2&lt;radius=55 &lt;H&lt;W/2</text>
+      <div class="item mrg border radius-55"></div>
+      <image class="item mrg border radius-55" src="https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg"></image>
+    </div>
+    <div class="row">
+      <text class="item mrg border radius-100 font"> H&lt;radius=100 &lt;W/2</text>
+      <div class="item mrg border radius-100"></div>
+      <image class="item mrg border radius-100" src="https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg"></image>
+    </div>
+    <div class="row">
+      <text class="item mrg border radius-200 font"> W/2&lt;radius=200 &lt;W</text>
+      <div class="item mrg border radius-200"></div>
+      <image class="item mrg border radius-200" src="https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg"></image>
+    </div>
+    <div class="row">
+      <text class="item mrg border radius-300 font"> W&lt;radius=300</text>
+      <div class="item mrg border radius-300"></div>
+      <image class="item mrg border radius-300" src="https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg"></image>
+    </div>
+    <div class="row">
+      <text class="item mrg border t-l-20 t-r-55 font">radius:(20,55,-,-)</text>
+      <div class="item mrg border t-l-20 t-r-55"></div>
+      <image class="item mrg border t-l-20 t-r-55" src="https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg"></image>
+    </div>
+    <div class="row">
+      <text class="item mrg border b-l-100 b-r-200 font">radius:(-,-,100,200)</text>
+      <div class="item mrg border b-l-100 b-r-200"></div>
+      <image class="item mrg border b-l-100 b-r-200" src="https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg"></image>
+    </div>
+    <div class="row">
+      <text class="item mrg border b-l-100 t-l-20 font">radius:(20,-,100,-)</text>
+      <div class="item mrg border b-l-100 t-l-20 "></div>
+      <image class="item mrg border b-l-100 t-l-20 " src="https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg"></image>
+    </div>
+    <div class="row">
+      <text class="item mrg border t-r-55 b-r-200 font">radius:(-,55,-,200)</text>
+      <div class="item mrg border t-r-55 b-r-200"></div>
+      <image class="item mrg border t-r-55 b-r-200" src="https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg"></image>
+    </div>
+    <div class="row">
+      <text class="item mrg border t-l-20 t-r-55 b-l-100 b-r-200 font">radius:(20,55,100,200)</text>
+      <div class="item mrg border  t-l-20 t-r-55 b-l-100 b-r-200"></div>
+      <image class="item mrg border  t-l-20 t-r-55 b-l-100 b-r-200" src="https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg"></image>
+    </div>
+    </TC_Support_Scroller>
+</template>
+
+<style>
+  .scroller {background-color: #F4F3DE;flex-direction: column;}
+  .title-div {background-color: #66CDAA;height: 66;margin-bottom: 5;}
+  .title{font-weight: bold;font-size: 36;margin-top:15;margin-left: 5;}
+  .row{flex-direction:row;}
+  .div {width: 375;flex-direction: row;margin-bottom: 15;padding: 15;}
+  .border{border-style: solid;border-color: #FF6666;border-width: 2;}
+  .radius-20{border-radius: 20;}
+  .radius-55{border-radius: 55;}
+  .radius-100{border-radius: 100;}
+  .radius-200{border-radius: 200;}
+  .radius-300{border-radius: 300;}
+  .style-dashed{border-style:dashed;}
+  .style-dotted{border-style: dotted;}
+  .txt {font-size: 30;color: #FF6666;}
+  .item {width: 230;height: 70;color: #eeeeee;font-size: 30;background-color: #BEAD92;}
+  .font{font-family: Times New Roman;}
+  .mrg{margin-left: 10;margin-right: 10;margin-top: 10;}
+  .t-l-20{border-top-left-radius: 20;}
+  .t-r-55{border-top-right-radius: 55;}
+  .b-l-100{border-bottom-left-radius: 100;}
+  .b-r-200{border-bottom-right-radius: 200;}
+
+
+
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      opacity: []
+    },
+    methods: {
+      ready: function() {
+        var opacity = [];
+        for (var i = 10; i >= 1; --i) {
+          opacity.push({op: 0.1 * i});
+        }
+        this.opacity = opacity;
+      },
+      onclick: function(ev) {
+//        console.log(ev);
+      }
+    }
+  };
+</script> 

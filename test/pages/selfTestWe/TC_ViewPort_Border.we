@@ -1,0 +1,124 @@
+<template>
+<TC_Support_Scroller>
+    <TC_Support_MainTitle title="TC_ViewPort_Border"></TC_Support_MainTitle>
+  <div>
+    <div>
+    <text>
+      当前设置的view适配宽度为 800
+    </text>
+    <text>
+      当前屏幕的分辨率为宽*高 {{_deviceWidth}} *{{_deviceHeight}}
+    </text>
+    </div>
+    <div class="box2000">
+    <text class="text">2000</text>
+      <div class="box750 radius-20">
+        <text class="text">750</text>
+        <div class="box640 radius-20">
+          <text class="text">640</text>
+          <div class="box480 radius-50">
+            <text class="text">480</text>
+              <div class="box320 radius-20">
+              <text class="text">320</text>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</TC_Support_Scroller>
+
+</template>
+
+<style>
+  .box2000 {
+    width: 2000;
+    height: 2000;
+    background-color: red;
+  }  
+  .box750 {
+    border-style: solid;
+    border-color: yellow;
+    border-width: 5px;
+    width: 750;
+    height: 750;
+    background-color: #EEEEEE;
+  }
+  .box640 {
+    border-style: dotted;
+    width: 640;
+    height: 640;
+    background-color: #CCCCCC;
+    border-bottom: 6px;
+  }
+  .box480 {
+    border-style: dotted;
+    border-color: blue;
+    border-width: 10px;
+    width: 480;
+    height: 480;
+    background-color: #BBBBBB;
+  }
+  .box320 {
+    width: 320;
+    height: 320;
+    background-color: #dddddd;
+  }
+  .radius-20{border-radius: 20;}
+  .radius-55{border-radius: 55;}
+  .radius-100{border-radius: 100;}
+  .radius-200{border-radius: 200;}
+  .radius-300{border-radius: 300;}
+  .text {
+    font-size: 50;
+  }
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      appConfig:'',
+      _deviceWidth:'',
+      _deviceHeight:'',
+      _weexVersion:'',
+      _osVersion:'',
+      _platform:'',
+      _appName:'',
+      _appVersion:'',
+      _deviceModel:'',
+      _bundleUrl:'',
+    },
+    methods: {
+      ready: function () {
+        // config
+        this.$getConfig(function (config) {
+            this.appConfig = config;
+            //nativeLog(JSON.stringify(config));
+            this._deviceWidth=config.env.deviceWidth;
+            this._deviceHeight=config.env.deviceHeight;
+            this._weexVersion=config.env.weexVersion;
+            this._osVersion=config.env.osVersion;
+            this._platform=config.env.platform;
+            this._appName=config.env.appName;
+            this._appVersion=config.env.appVersion;
+            this._deviceModel=config.env.deviceModel;
+            var lastIndex = config.bundleUrl.lastIndexOf('random=');
+            if(lastIndex>=0){
+              this._bundleUrl=config.bundleUrl.substring(0,lastIndex-1);
+            }else{
+              this._bundleUrl=config.bundleUrl;
+            }
+            
+        }.bind(this));
+      },
+    }
+  }
+</script>
+
+<script type="config">
+  {
+    viewport: {
+      width: 800,
+    }
+  }
+</script>

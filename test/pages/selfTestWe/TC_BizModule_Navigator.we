@@ -1,0 +1,184 @@
+<template>
+  <scroller onclickmoreitem="onclickmoreitem" onclickRightItem="onclickRightItem" style='background-color: #F5F5F5'>
+    <TC_Support_MainTitle title="TC_BizModule_Navigator"></TC_Support_MainTitle>
+
+    <TC_Support_SubTitle title="navigator hidden"></TC_Support_SubTitle>
+    <text class='btn' repeat='hidden' onclick="navigator(apiName,params)">{{title}}</text>
+
+    <TC_Support_SubTitle title="navigator push&&pop"></TC_Support_SubTitle>
+    <text class='btn' repeat='push' onclick="navigator(apiName,params)">{{title}}</text>
+
+    <TC_Support_SubTitle title="navigator rightMore"></TC_Support_SubTitle>
+    <text class='btn' repeat='rightMore' onclick="navigator(apiName,params)">{{title}}</text>
+
+    <TC_Support_SubTitle title="navigator right"></TC_Support_SubTitle>
+    <text class='btn' repeat='right' onclick="navigator(apiName,params)">{{title}}</text>
+
+    <TC_Support_SubTitle title="navigator title"></TC_Support_SubTitle>
+    <text class='btn' repeat='title' onclick="navigator(apiName,params)">{{title}}</text>
+
+    <TC_Support_SubTitle title="navigator others"></TC_Support_SubTitle>
+    <text class='btn' repeat='others' onclick="navigator(apiName,params)">{{title}}</text>
+  </scroller>
+</template>
+
+<style>
+  .btn {
+    width: 500;
+    height: 60;
+    background-color: rgb(92, 184, 92);
+    padding: 20;
+    font-size:20;
+    border-radius: 15px;
+    margin-left: 50;
+    margin-top: 20;
+  }
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      hidden: [
+        {
+          apiName:'setNavBarHidden',
+          title:'隐藏导航条',
+          params:{'hidden':  1,'animated' : 'true',}
+        },
+        {
+          apiName:'setNavBarHidden',
+          title:'显示隐藏导航条',
+          params:{'hidden':  0,'animated' : 'true',}
+        },
+      ],
+      push:[
+        {
+          apiName:'push',
+          title:'push to 必抢',
+          params:{
+            'url': 'https://pre-wormhole.tmall.com/wow/portal/act/db11-router?wh_weex=true&wh_system_time=2016-10-24%2000:00:04',
+            'animated' : 'true',
+          }
+        },
+        {
+          apiName:'push',
+          title:'push to 黑名单',
+          params:{
+            'url':  'http://github.com/zhen99425?wh_weex=true',
+            'animated' : 'true',
+            }
+        },
+        {
+          apiName:'pop',
+          title:'pop',
+          params:{'animated' : 'true',}
+        },
+      ],
+      rightMore:[
+        {
+          apiName:'setNavBarMoreItem',
+          title:'设置右侧更多按钮',
+          params:{
+            items: [
+              {
+                icon: 'tm_quick_menu_share.png',
+                fromNative: 'true',
+                iconFont: 'true',
+                text: '分享'
+              },
+              {
+                icon: 'home',
+                fromNative: 'true',
+                iconFont: 'true',
+                text: 'home'
+              },
+              {
+                icon: 'tb_icon_navibar_default_right',
+                fromNative: 'true',
+                text: 'default List'
+              }, 
+            ],
+          }
+        },
+        {
+          apiName:'clearNavBarMoreItem',
+          title:'清除右侧更多按钮',
+          params:{}
+        },
+      ],
+      right:[
+        {
+          apiName:'setNavBarRightItem',
+          title:'设置右侧按钮',
+          params:{icon: 'iVBORw0KGgoAAAANSUhEUgAAADgAAAA4BAMAAABaqCYtAAAAGFBMVEX///9bYmxbYmxbYmxbYmxbYmxbYmxbYmwN6C/eAAAAB3RSTlMAufow7PZXjR+zEAAAAFJJREFUeF7tkLENgDAMBB1A1EhZADEBbECXEdIyRNCtT0MBxYuK7q+1zrIv/sVsS5ZCXzlXJSZgirHwoB232QFzDLzYv4Z6rThIvaJxW7d1W3MByIBt+f4fAsMAAAAASUVORK5CYII=',}
+        },
+        {
+          apiName:'clearNavBarRightItem',
+          title:'清除右侧按钮',
+          params:{}
+        },
+      ],
+      title:[
+        {
+          apiName:'setNavBarTitle',
+          title:'设置navbar标题',
+          params:{title: 'set title by navigator'}
+        },
+        {
+          apiName:'setNavBarTitle',
+          params:{
+            icon: 'iVBORw0KGgoAAAANSUhEUgAAAKIAAAAxCAYAAABZAHL2AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGQTIyRTA2QTNDNTQxMUU2OUM3OEEzOTYxNjIzQkVBNiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGQTIyRTA2QjNDNTQxMUU2OUM3OEEzOTYxNjIzQkVBNiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZBMjJFMDY4M0M1NDExRTY5Qzc4QTM5NjE2MjNCRUE2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkZBMjJFMDY5M0M1NDExRTY5Qzc4QTM5NjE2MjNCRUE2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+dgY27AAACBFJREFUeNrsXQmM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',
+            iconType:'Base64'
+          },
+          title:'设置navbar标题-base64'
+        },
+      ],
+      others:[
+        {
+          apiName:'setFestivalStyle',
+          params:{naviBar: 'festival'},
+          title:'setFestivalStyle(暂无效)'
+        },
+        {
+          apiName:'updateBadgeText',
+          params:{title: 'Text'},
+          title:'updateBadgeText(暂无效)'
+        },
+        {
+          apiName:'updateBadgeTextWithPrice',
+          params:{title: '123'},
+          title:'updateBadgeTextWithPrice(暂无效)'
+        },
+        {
+          apiName:'setShortcutToDesktop',
+          params:{
+            buttonText: '添加到桌面',
+            title: '我是快捷方式',
+            icon: 'http://img02.taobaocdn.com/tps/i2/T1Dk6wXahXXXamNNre-140-140.png',
+            url: 'http://m.taobao.com/',
+            guideUrl: 'http://wapp.m.taobao.com/wv/addDesktop.html',
+            autoReset: true
+          },
+          title:'setShortcutToDesktop(暂无效)'
+        },
+        {
+          apiName:'clearShortcutToDesktop',
+          params:{},
+          title:'clearShortcutToDesktop(暂无效)'
+        },
+      ],
+    },
+    methods: {
+      navigator: function(apiName, params) {
+        var navigatorModule = require('@weex-module/navigator');
+        navigatorModule[apiName](params, function(e){});
+      },
+      onclickmoreitem:function(e) {
+          var index = e.index;
+          this.$call('modal', 'toast', {'message':index})
+      },
+      onclickRightItem:function(e) {
+          this.$call('modal', 'toast', {'message':'onclickRightItem'})
+      },
+    }
+  }
+</script>

@@ -1,0 +1,75 @@
+<template>
+  <div onclick="redirect">
+    <div class="list-cell-div">
+      <text class="list-cell-link font" onclick="redirect">{{text}}</text>
+    </div>
+    <div class="div-split"></div>
+  </div>
+</template>
+
+<style>
+.list-cell-div{flex-direction: column;background-color:#ffffff;justify-content:center; height: 60; padding-left: 20; background-color: #ffffff; }
+.font{font-family: Times New Roman;}
+.list-cell-link{ font-size: 30;text-decoration: underline; color: #33a3dc;}
+.div-split{height: 1; border-width: 1; border-style:dashed; border-color: #375830;}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      text:'',
+      appConfig:''
+    },
+    methods: {
+      ready: function () {
+        nativeLog("bundleUrl1 ready==" )
+
+        this.$getConfig(function (config) {
+            this.appConfig = config;
+        }.bind(this));
+      },
+      redirect:function (e) {
+        var bundleUrl = this.appConfig.bundleUrl;
+        nativeLog("bundleUrl1==" + bundleUrl)
+
+        var randomIndex = bundleUrl.lastIndexOf("random=");
+        if(randomIndex>=0){
+          bundleUrl=bundleUrl.substring(0,randomIndex-1);
+          nativeLog("bundleUrl==" + bundleUrl)
+
+        }
+
+        var _appName = this.appConfig.env.appName;
+        var lastIndex = bundleUrl.lastIndexOf('/selfTestWe/');
+                nativeLog("lastIndex==" + lastIndex)
+
+        if(lastIndex<0){
+          var message = "link not contains `/build/`;bundleUrl:"+bundleUrl;
+          var okTitle = "OK";
+          var params = {
+            'message':message,
+            'okTitle':okTitle,
+          }
+          this.$call('modal','alert',params,function() {});
+          return;
+        }
+
+        var prefix=bundleUrl.substring(0,lastIndex + 12);
+        nativeLog("prefix==" + prefix)
+
+        var suffix=bundleUrl.substring(lastIndex + 12,bundleUrl.length);
+        nativeLog("suffix==" + suffix)
+
+        var jsIndex=suffix.indexOf(".js");
+        if(jsIndex>=0){
+          suffix=suffix.substring(jsIndex,suffix.length);
+        }
+        var transferUrl = prefix+this.text+suffix;
+
+        nativeLog("transferUrl==" + transferUrl)
+        
+        this.$openURL(transferUrl);
+      }
+    }
+  }
+</script>

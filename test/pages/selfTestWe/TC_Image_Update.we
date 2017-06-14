@@ -1,0 +1,152 @@
+<template>
+  
+<TC_Support_Scroller>
+    <TC_Support_MainTitle title="TC_Image_Update"></TC_Support_MainTitle>
+    <image class="HasHW" style="opacity:{{opacityValue}};width:{{widthValue}};height:{{heightValue}};" src="{{srcValue}}" resize="{{resizeType}}"></image>
+    <div style="flex-direction: row;">
+      <text class="btn font" flag-id="btn-wrongSrc" onclick="setWrongSrc">error src</text>
+      <text class="btn font" flag-id="btn-otherSrc" onclick="setOtherSrc">change src</text>
+    </div>
+    <div style="flex-direction: row;">
+      <text class="btn font" flag-id="btn-rightSrc" onclick="setRightSrc">origin src</text>
+      <text class="btn font" flag-id="btn-highOpacity" onclick="setHighOpacity">pic opacity</text>
+    </div>
+    <div style="flex-direction: row;">
+      <text class="btn font" flag-id="btn-lowOpacity" onclick="setLowOpacity">pic transparency</text>
+    
+      <text class="btn font" flag-id="btn-largeWidth" onclick="setLargeWidth">width large</text>
+    </div>
+    <div style="flex-direction: row;">
+      <text class="btn font" flag-id="btn-lessWidth" onclick="setLessWidth">width less</text>
+    
+      <text class="btn font" flag-id="btn-largeHeight" onclick="setLargeHeight">height large</text>
+    </div>
+    <div style="flex-direction: row;">
+      <text class="btn font" flag-id="btn-lessHeight" onclick="setLessHeight">height less</text>
+    
+      <text class="btn font" flag-id="btn-largeScale" onclick="setLargeScale">scale large</text>
+    </div>
+    <div style="flex-direction: row;">
+      <text class="btn font" flag-id="btn-lessScale" onclick="setLessScale">scale smaller</text>
+    
+      <text class="btn font" flag-id="btn-origin" onclick="setOrigin">pic origin</text>
+    </div>  
+    <div style="flex-direction: row;">
+      <text class="btn font" flag-id="btn-lessScale" onclick="setResizeCover">resize cover</text>
+      <text class="btn font" flag-id="btn-lessScale" onclick="setResizeContain">resize contain</text>
+    </div>  
+
+  </TC_Support_Scroller>
+</template>
+
+<style>
+
+
+.font{font-family: Times New Roman;}
+  .block {flex-direction: column;border-width:3;border-color:#ffff00;border-style:dotted;margin-bottom:5;overflow:hidden;}
+  .discript {flex: 1; color: #000000; font-weight: bold; font-size:30;background-color: #37dd23;overflow:hidden;font-family: Times New Roman;}
+  .HasHW {margin:10;background-color: #ffff00;}
+  .btn{ width:300; font-size: 25; border-width: 3; border-color: #cccccc; padding: 5; border-style: solid;border-radius: 3; margin: 5;font-family: Times New Roman; }
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      srcValue:"https://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg",
+      opacityValue:0.5,
+      widthValue:200,
+      heightValue:200,
+      resizeType:"stretch"
+    },
+    methods: {
+      setWrongSrc: function (e) {
+        this.srcValue="不可显示的src";
+        this.opacityValue=0.5;
+        this.widthValue=200;
+        this.heightValue=200;
+      },
+      setOtherSrc: function (e) {
+        this.srcValue="https://gd4.alicdn.com/bao/uploaded/i4/TB12JkTKXXXXXbkaXXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg";
+        this.opacityValue=0.5;
+        this.widthValue=200;
+        this.heightValue=200;
+      },
+      setRightSrc: function (e) {
+        this.srcValue="http://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg";
+        this.opacityValue=0.5;
+        this.widthValue=200;
+        this.heightValue=200;
+      },
+      setHighOpacity: function (e) {
+        this.srcValue="http://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg";
+        this.opacityValue=1.0;
+        this.widthValue=200;
+        this.heightValue=200;
+      },
+      setLowOpacity: function (e) {
+        this.srcValue="http://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg";
+        this.opacityValue=0.1;
+        this.widthValue=200;
+        this.heightValue=200;
+      },
+      setLargeWidth: function (e) {
+        this.srcValue="http://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg";
+        this.opacityValue=0.5;
+        this.widthValue=400;
+        this.heightValue=200;
+      },
+      setLessWidth: function (e) {
+        this.srcValue="http://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg";
+        this.opacityValue=0.5;
+        this.widthValue=100;
+        this.heightValue=200;
+      },
+      setLargeHeight: function (e) {
+        this.srcValue="http://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg";
+        this.opacityValue=0.5;
+        this.widthValue=200;
+        this.heightValue=400;
+      },
+      setLessHeight: function (e) {
+        this.srcValue="http://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg";
+        this.opacityValue=0.5;
+        this.widthValue=200;
+        this.heightValue=100;
+      },
+      setLargeScale: function (e) {
+        this.srcValue="http://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg";
+        this.opacityValue=0.5;
+        this.widthValue=400;
+        this.heightValue=400;
+      },
+      setLessScale: function (e) {
+        this.srcValue="http://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg";
+        this.opacityValue=0.5;
+        this.widthValue=100;
+        this.heightValue=100;
+      },
+      setOrigin: function (e) {
+        this.srcValue="http://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg";
+        this.opacityValue=0.5;
+        this.widthValue=200;
+        this.heightValue=200;
+      },
+      setResizeCover: function (e) {
+        this.srcValue="http://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg";
+        this.opacityValue=0.5;
+        this.resizeType="cover";
+        this.widthValue=400;
+        this.heightValue=200;
+      },
+      setResizeContain: function (e) {
+        this.srcValue="http://gw.alicdn.com/tfscom/TB1OMfAJFXXXXbfXXXXqVMCNVXX-400-400.jpg";
+        this.opacityValue=0.5;
+        this.resizeType="contain";
+        this.widthValue=200;
+        this.heightValue=400;
+      },
+      
+    
+    }
+  }
+</script>

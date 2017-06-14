@@ -1,0 +1,10 @@
+<template>
+    <scroller class="screen">
+        <content></content>
+    </scroller>
+</template>
+
+<style>
+.root{flex-direction: column; background-color: #ffffff;}
+.screen{flex-direction: column; background-color: #ffffff;width:750;height:1000;border-width: 3;border-color: #00ff00;}
+</style>

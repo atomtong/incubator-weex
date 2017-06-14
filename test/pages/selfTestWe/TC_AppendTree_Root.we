@@ -1,0 +1,32 @@
+<template>
+  <div append="tree">
+    <TC_Support_MainTitle title="TC_AppendTree_Root" onclick="created"></TC_Support_MainTitle>
+    <text class="text" repeat="{{list}}">{{text}}</text>
+  </div>
+</template>
+
+<style>
+  .text{margin-top: 10;margin-left: 10;margin-bottom:10; font-size: 26; font-weight: bold;}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      list: []
+    },
+    methods: {
+      ready: function () {
+        this.created();
+      },
+      asyncMethod: function(msg,cb){
+        cb(msg);
+      },
+      created: function(e) {
+        var self = this;
+        for(var i=1;i<11;i++){
+          self.list.push({text: "测试文本："+i});
+        }
+      },
+    }
+  }
+</script>

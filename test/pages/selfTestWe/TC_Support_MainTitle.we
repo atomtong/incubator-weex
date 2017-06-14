@@ -1,0 +1,28 @@
+<style>
+  .title-div {background-color: #66CDAA;height: 66 ; padding-bottom: 10}
+  .title{font-weight: bold;font-size: 36;margin-top:15;margin-left: 5; text-align: center;}
+  .font{font-family: Times New Roman;}
+</style>
+
+<template>
+	<!--  TC_Support_MainTitle  -->
+	<!-- see: http://weex.alibaba-inc.com/syntax/custom-elements -->
+  <div class="title-div">
+    <text class="title font">{{title}}</text>
+  </div>
+</template>
+
+<style>
+  .div-split{height: 2; border-width: 1; border-style:dashed; border-color: #375830;}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      title:''
+    },
+    methods: {
+    }
+  }
+</script>
+

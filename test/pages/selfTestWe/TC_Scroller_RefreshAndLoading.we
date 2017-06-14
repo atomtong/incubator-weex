@@ -1,0 +1,130 @@
+<template>
+  <div>
+    <TC_Support_MainTitle title="TC_Scroller_RefreshAndLoading"></TC_Support_MainTitle>
+    <div class="list">
+  		<TC_Support_SubTitle title="Scroller refresh&loading"></TC_Support_SubTitle>
+      <scroller>
+        <refresh  class="refresh" display="{{refreshDisplay}}" onrefresh="onrefresh">
+          <loading-indicator class="indicator"></loading-indicator>
+          <text class="refresh-txt">↓ 下拉刷新</text>
+        </refresh>
+    
+        <div repeat="(k,v) in cells" style="height:100">
+          <text class="txt">{{k}}-{{v}}</text>
+        </div>
+    
+        <loading class="refresh" display="{{loadingDisplay}}" onloading="onloading">
+          <loading-indicator class="indicator"></loading-indicator>
+          <text class="refresh-txt">↑ 上拉加载</text>
+        </loading>
+      </scroller>
+    </div>
+    <div class='list' style="height:296">
+      <TC_Support_SubTitle title="Display hide immediately:"></TC_Support_SubTitle>
+      <text onclick="change" class='btn'>{{btnTxt}}</text>
+    </div>
+  </div>
+</template>
+
+<style>
+  .list {
+    height: 592;
+    border-width: 3;
+    border-color:#FF00FF;
+    margin:10;
+  }
+  .refresh{
+    flex-direction:row;
+    justify-content:center;
+    align-items: center;
+    width:750;
+    height: 100;
+    border-width:3;
+    background-color: #33b5e5;
+  }
+  .refresh-txt {
+    font-size: 30;
+    color: #FFFF00;
+    text-align: center;
+  }
+  .indicator{
+    height: 50;
+    width: 50;
+    color: #889967;
+  }
+  .txt {
+    font-size:40;
+    height:100;
+    padding:30;
+    border-width:1;
+    border-style:dotted;
+  }
+  .btn {
+    width:210;
+    height:50;
+    text-align: center;
+    border-width: 1;
+    border-color: #696969;
+    border-style:solid;
+    border-radius:5;
+    margin:10;
+  }
+</style>
+
+<script>
+  module.exports = {
+    data : {
+      cells: [0,1,2,3,4,5,6,7,8,9],
+      refreshDisplay: 'hide',
+      loadingDisplay: 'hide',
+      btnTxt:'true',
+    },
+    methods: {
+      onrefresh: function(e) {
+        // show
+        this.refreshDisplay = 'show';
+        this.$call('modal', 'toast', {'message': 'onrefresh···'});
+
+        // hide after 3 seconds
+        if(this.btnTxt === 'true') {
+          this.refreshDisplay = 'hide';
+        } else {
+          var callback = function () {
+            this.refreshDisplay = 'hide';
+          }.bind(this);
+          if (this.refreshDisplay !== 'hide') {
+            this.$call('timer', 'setTimeout', callback, 3000);
+          }
+        }
+        
+      },
+
+      onloading: function() {
+        // show
+        this.loadingDisplay = 'show';
+        this.$call('modal', 'toast', {'message': 'onloading···'});
+
+        // hide after 3 seconds
+        if(this.btnTxt === 'true') {
+          this.loadingDisplay = 'hide';
+        } else {
+          var callback = function () {
+            this.loadingDisplay = 'hide';
+          }.bind(this);
+          if (this.loadingDisplay !== 'hide') {
+            this.$call('timer', 'setTimeout', callback, 3000);
+          }
+        }
+        
+      },
+      change : function() {
+        if(this.btnTxt === 'true') {
+          this.btnTxt = 'false';
+        } else {
+          this.btnTxt = 'true';          
+        }
+      }
+    },
+  }
+</script>
+

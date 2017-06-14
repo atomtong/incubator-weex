@@ -1,0 +1,73 @@
+<template>
+  <scroller>
+    <TC_Support_MainTitle title="TC_BizModule_Share"></TC_Support_MainTitle>
+    <div repeat="{{targetList}}">
+      <text onclick="touch" class="btn">{{target}}</text>
+    </div>
+  </scroler>
+  <text class="ret">{{ret}}</text>
+</template>
+
+<style>
+  .btn{
+    width:400;
+    height:60;
+    background-color:#EEEEEE;
+    border-width: 1;
+    border-color: #696969;
+    border-style:solid;
+    border-radius:5;
+    margin-top: 5;
+    margin-left: 15;
+  }
+  .ret{
+    width: 400;
+    background-color: #00FF00;
+    margin-top: 5;
+    margin-left: 15;
+  }
+</style>
+
+<script>
+  module.exports = {
+    data : {
+      targetList: [
+        {target: 'all'},
+        {target: 'copy'},
+        {target: 'sinaweibo'},
+        {target: 'contacts'},
+        {target: 'wxfriend'},
+        {target: 'wxtimeline'},
+        {target: 'qrcode'},
+        {target: 'wangxin'},
+        {target: 'momo'},
+        {target: 'dingtalk'},
+        {target: 'alipay'},
+        {target: 'qq'},
+        {target: 'guangjie'},
+        {target: 'present'},
+        {target: ''},
+      ],
+      ret : ''
+    },
+    methods : {
+      touch:function(e) {
+        var params = {
+          targets:e.target.attr.value,
+          title: '憨豆',
+          text: '～憨豆～哈哈哈哈～',
+          image: 'http://img0.bdstatic.com/img/image/4359213b07eca806538f43aff0495dda144ac3482d1.jpg',
+          url: 'http://img0.bdstatic.com/img/image/4359213b07eca806538f43aff0495dda144ac3482d1.jpg'
+        };
+        this.ret = params.targets
+        var self = this
+        this.$call('share', 'doShare', params, function(e) {
+          self.ret = 'result:' + e
+        });
+      },
+      toggle: function () {
+        this.$call('modal', 'toast', {'message':'1', 'duration':2})
+      }
+    }
+  }
+</script>

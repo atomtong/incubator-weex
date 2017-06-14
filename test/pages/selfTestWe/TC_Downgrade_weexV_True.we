@@ -1,0 +1,155 @@
+<template>
+  
+<TC_Support_Scroller>
+    <text class="discript">我是weex页面～</text>
+    <div class="div-split"></div>
+    <div style="flex-direction: column;">
+      <list class="list" style="height:900;">
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >deviceWidth：</text>
+              <text class="list-cell-link">{{_deviceWidth}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >deviceHeight：</text>
+              <text class="list-cell-link">{{_deviceHeight}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >weexVersion：</text>
+              <text class="list-cell-link">{{_weexVersion}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >osVersion：</text>
+              <text class="list-cell-link">{{_osVersion}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >platform：</text>
+              <text class="list-cell-link">{{_platform}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >appName：</text>
+              <text class="list-cell-link">{{_appName}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >appVersion：</text>
+              <text class="list-cell-link">{{_appVersion}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >deviceModel：</text>
+              <text class="list-cell-link">{{_deviceModel}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc largeH" >bundleUrl：</text>
+              <text class="list-cell-link largeH">{{_bundleUrl}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+      </list>
+    </div>
+    
+  </TC_Support_Scroller>
+</template>
+<style>
+
+
+
+.discript {flex: 1; color: #000000; font-weight: bold; font-size:30;background-color: #37dd23;}
+ .title{margin-top: 10;margin-left: 10;margin-bottom:10; font-size: 40; font-weight: bold;text-align: center;;}
+  .div-split{height: 2; border-width: 1; border-style:dashed; border-color: #375830;}
+  .list{width: 750; border-width: 1;border-color: #eeeeee;flex-direction: column;overflow: hidden;}
+  .list-cell-div{flex-direction: column;background-color:#ffffff;justify-content:center; }
+  .list-cell-link{ font-size: 30; margin-top:15; margin-left: 15; margin-bottom:15; }
+  .list-cell-desc{ font-size: 30; margin-top:15; margin-left: 15; margin-bottom:15; font-weight: bold;}
+  .largeH{height: 100;}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      appConfig:'',
+      _deviceWidth:'',
+      _deviceHeight:'',
+      _weexVersion:'',
+      _osVersion:'',
+      _platform:'',
+      _appName:'',
+      _appVersion:'',
+      _deviceModel:'',
+      _bundleUrl:'',
+    },
+    methods: {
+      ready: function () {
+        // config
+        this.$getConfig(function (config) {
+            this.appConfig = config;
+            //nativeLog(JSON.stringify(config));
+            this._deviceWidth=config.env.deviceWidth;
+            this._deviceHeight=config.env.deviceHeight;
+            this._weexVersion=config.env.weexVersion;
+            this._osVersion=config.env.osVersion;
+            this._platform=config.env.platform;
+            this._appName=config.env.appName;
+            this._appVersion=config.env.appVersion;
+            this._deviceModel=config.env.deviceModel;
+            this._bundleUrl=config.bundleUrl;
+        }.bind(this));
+      },
+    }
+  }
+</script>
+
+<script type="config">
+{
+    downgrade:{
+      ios: {
+      	weexVersion: '*',
+        
+      },
+      android: {
+        weexVersion: '*',
+      }
+    }
+}
+</script>

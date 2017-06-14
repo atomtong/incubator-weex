@@ -1,0 +1,55 @@
+<template>
+  <scroller style="flex-direction: column;">
+  	<TC_Support_MainTitle title="TC_BizModule_Mtop"></TC_Support_MainTitle>
+    <div>
+        <text class= "btn" value = '{{btntxt}}' onclick = "sendMtop"></text>
+    </div>
+    <TC_Support_SubTitle title="响应状态："></TC_Support_SubTitle>
+    <div style="flex-direction:column; margin-top:5; padding-top:5; padding-bottom:5;">
+        <text class="textarea" >{{resultType}}</text>
+    </div>
+    <TC_Support_SubTitle title="请求结果："></TC_Support_SubTitle>
+    <div style="flex-direction:column; margin-top:5; padding-top:5; padding-bottom:5;">
+        <text class="textarea">{{resultData}}</text>
+    </div>
+  </scroller>
+</template>
+
+<style>
+.btn{ width:710; font-size: 25; border-width: 3; border-color: #cccccc; padding: 5; border-style: solid;border-radius: 3; margin: 5;font-family: Times New Roman; }
+.textarea{width: 710; height: 400; font-size: 30;}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      btntxt:'点击我，使用Mtop module发送MTop',
+      resultType:'等待结果',
+      resultData:'等待结果'
+    },
+    methods: {	
+      sendMtop:function (e) {
+        var mtop = require('@weex-module/mtop');
+
+        this.btntxt='已点击，等待Mtop module结果';
+        var params = {
+          "api": "mtop.msp.qianggou.querybatch",
+          "v": "3.1"
+        };
+
+        mtop.send(params, function(ret) {
+          if(typeof(ret) == 'string'){
+            ret=JSON.parse(ret);
+          }
+          if (ret && ret.data) {
+             this.resultType=JSON.stringify(ret.ret);
+             this.resultData=JSON.stringify(ret.data);
+          }else{
+            this.resultType='error：MTOP无响应！';
+          }
+          this.btntxt='结果已返回，点击使用Mtop module发送MTop';
+        }.bind(this));
+      }
+    }
+  }
+</script>

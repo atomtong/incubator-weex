@@ -1,0 +1,362 @@
+<template>
+  <TC_BizComponent_Support_NavPage data-role="none" height={{navBarHeight}} background-color="#ff5898" title="WeexDemo" title-color="white" left-item-title="Back" left-item-color="white" onclickrightitem = "onclickRightItem" right-item-src="http://gtms02.alicdn.com/tps/i2/TB1ED7iMpXXXXXEXXXXWA_BHXXX-48-48.png">
+
+    <scroller style="flex-direction: column; position:absolute; top:0; left:0; right:0; bottom:0; margin-top:{{navBarHeight}}" >
+      <div class="block">
+        <TC_Support_SubTitle title="01.Nav Transform"></TC_Support_SubTitle>
+        <text item-id="{{itemId}}" class="noWH" repeat="{{Column_Navigator}}" value="{{textValue}}" style="font-size:{{fontSize}}" onclick="clickEvent" event-name="{{eventName}}" parent-name="{{parentName}}"></text>
+      </div>
+      <div class="block">
+        <TC_Support_SubTitle title="02.Nav Setting"></TC_Support_SubTitle>
+        <text item-id="{{itemId}}" class="noWH" repeat="{{Column_NaviBar}}" value="{{textValue}}" style="font-size:{{fontSize}}" onclick="clickEvent" event-name="{{eventName}}" parent-name="{{parentName}}"></text>
+      </div>
+    </scroller>
+  </TC_BizComponent_Support_NavPage>
+</template>
+
+<style>
+  .block {flex-direction: column;overflow: visible;}
+  .discript {flex: 1; color: #000000; font-size:30;font-weight: bold; background-color: #37dd23;overflow: visible;font-family: Times New Roman;}
+  .title {flex: 1; color: #000000;font-size:35; font-weight: bold; background-color: #ff0000;overflow: visible;font-family: Times New Roman;}
+  .hasWH {width:400;background-color:#cccccc;font-size:30;margin:10;overflow: visible;font-family: Times New Roman;}
+  .noWH {background-color:#cccccc;font-size:30;margin:10;overflow: visible;font-family: Times New Roman;}
+  .support {background-color: #ffff00;font-size:30;overflow: visible;font-family: Times New Roman;}
+  .typeBase {width:200;background-color:#00ffff;font-size:30;margin:10;font-family: Times New Roman;}
+  .typeCompare {width:500;background-color:#cccccc;font-size:30;margin:10;font-family: Times New Roman;}
+  .web {width:750; height:800}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      appConfig:'',
+      navBarHeight: 88,
+      actionStatus: "none", 
+      Column_Navigator:[
+        {itemId: 'id0201', textValue: 'click to push', width: 400, height: 30 ,fontSize:40,eventName:'push',parentName:'Column_Navigator'},
+        {itemId: 'id0202', textValue: 'click to pop', width: 400, fontSize:40,eventName:'pop',parentName:'Column_Navigator'},
+      ],
+      Column_NaviBar:[
+
+        {itemId: 'id0301', textValue: 'clearNaviBarTitle', width: 400, fontSize:40,eventName:'clearNaviBarTitle',parentName:'Column_NaviBar'},
+        {itemId: 'id0302', textValue: 'setNaviBarTitle', width: 400, fontSize:40,eventName:'setNaviBarTitle',parentName:'Column_NaviBar'},
+        {itemId: 'id0303', textValue: 'clearNaviBarRightItem', width: 400, fontSize:40,eventName:'clearNaviBarRightItem',parentName:'Column_NaviBar'},
+        {itemId: 'id0304', textValue: 'setNaviBarRightItem', width: 400, fontSize:40,eventName:'setNaviBarRightItem',parentName:'Column_NaviBar'},
+        {itemId: 'id0305', textValue: 'clearNaviBarMoreItem(shoutao only)', width: 400, fontSize:40,eventName:'clearNaviBarMoreItem',parentName:'Column_NaviBar'},
+        {itemId: 'id0306', textValue: 'setNaviBarMoreItem(shoutao only)', width: 400, fontSize:40,eventName:'setNaviBarMoreItem',parentName:'Column_NaviBar'},
+        {itemId: 'id0307', textValue: 'clearNaviBarLeftItem(shoutao nouse)', width: 400, fontSize:40,eventName:'clearNaviBarLeftItem',parentName:'Column_NaviBar'},
+        {itemId: 'id0308', textValue: 'setNaviBarLeftItem(shoutao nouse)', width: 400, fontSize:40,eventName:'setNaviBarLeftItem',parentName:'Column_NaviBar'},
+        {itemId: 'id0309', textValue: 'setNaviRightItemIconfont', width: 400, fontSize:40,eventName:'setNaviRightItemIconfont',parentName:'Column_NaviBar'},
+        {itemId: 'id0310', textValue: 'setNavBarHidden', width: 400, fontSize:40,eventName:'setNavBarHidden',parentName:'Column_NaviBar'},
+        {itemId: 'id0311', textValue: 'setNavBarShow', width: 400, fontSize:40,eventName:'setNavBarShow',parentName:'Column_NaviBar'},
+      ],
+    },
+    methods: {
+      /**
+      *  view LifeCycle
+      */
+
+      onclickRightItem: function (e) {
+        nativeLog("onclickRightBtn");
+        var params = {
+          'message': "onclickRightBtn",
+          'duration': 2,
+        }
+        this.$call('modal','toast',params);
+      },
+
+      ready: function (e) {
+
+                // config
+        this.$getConfig(function (config) {
+            this.appConfig = config;
+        }.bind(this));
+
+        nativeLog("TC_App_Frm ready");
+        this.$getConfig(function (config) {
+          var env = config.env;
+          if(env.platform == 'iOS'){
+            var scale = env.scale;
+            var deviceWidth = env.deviceWidth / scale;
+            this.navBarHeight = 64.0 * 750.0 / deviceWidth;
+          }
+        }.bind(this));
+        this.$on('naviBar.leftItem.click', function(e) {
+          var vm = this;
+          var params = {
+            'animated' : 'true',
+          };
+          vm.$call('navigator','pop', params, null);
+        })
+      },
+
+      destroy: function (e) {
+        nativeLog("TC_App_Frm destroy");
+      },
+      viewAppear: function (e) {
+        nativeLog("TC_App_Frm viewAppear");
+      },
+      viewDisAppear: function (e) {
+        nativeLog("TC_App_Frm viewDisAppear");
+      },
+
+      /**
+      *  Data Storage
+      */
+
+      mutiSet: function (e,parentName) {
+        var vm = this;
+        var data = {
+          "version": "1.4.0",
+          "bundle": "weex-test"
+        };
+
+        this.$mutiSet(data, function(e) {
+          var data = JSON.parse(e);
+          var duration = 2;
+          var params = {
+            'message':  "写入数据：" + data.result,
+            'duration': duration,
+          }
+          vm.$call('modal','toast',params);
+        });
+      },
+      mutiGet: function (e,parentName) {
+        var vm = this;
+        vm.$mutiGet(["version","bundle"], function(e) {
+          var data = JSON.parse(e);
+          var duration = 2;
+          var params = {
+            'message':  "bundle:" + data.bundle + "\n" + "version:" + data.version,
+            'duration': duration,
+          }
+          vm.$call('modal','toast',params);
+        });
+      },
+      clear: function (e,parentName) {
+        var vm = this;
+        vm.$mutiRemove(["version","bundle"], function(e) {
+          var data = JSON.parse(e);
+          var duration = 2;
+          var params = {
+            'message':  "删除数据：" + data.result,
+            'duration': duration,
+          }
+          vm.$call('modal','toast',params);
+        });
+      },
+
+      /**
+      *  Navigator
+      */
+      push: function (e,parentName) {    
+        var vm = this;
+        var params = {
+          'url':  this.getTabUrl("TC_BizComponent_Support_Pop"),
+          // 'url': 'http://30.10.221.249:12580/test/build/TC_TabPage2.js',
+          'animated' : 'true',
+        }
+        vm.$call('navigator','push',params, null);
+      },
+      pop: function (e,parentName) {
+        var vm = this;
+        var params = {
+          'animated' : 'true',
+        }
+        vm.$call('navigator','pop', params, null);
+
+      },
+      close: function (e,parentName) {
+        var vm = this;
+        vm.$call('navigator','close',{}, null);
+      },
+
+      /**
+      *  Navibar Setup
+      */
+
+      setNaviBarTitle: function (e,parentName) {
+        nativeLog("setNaviBarTitle");
+        var params = {
+          // 要设置的页面标题
+          title: 'WeexDemo',
+          titleColor: 'white',
+        };
+        this.$call('navigator','setNavBarTitle',params,null);
+      },
+
+      clearNaviBarTitle: function (e,parentName) {
+        nativeLog("clearNaviBarTitle");
+        this.$call('navigator','clearNavBarTitle',null,null);
+      },
+
+      setNaviBarRightItem: function (e,parentName) {
+        nativeLog("setNavBarRightItem");
+
+        var params = {
+          // 要设置的图标
+          title: 'home',
+          icon: 'home',
+          titleColor: 'white',
+          // 图标是否从 native 中获取
+          fromNative: 'true',
+          // 客户端中预置的图标是否是 iconFont
+          iconFont: 'true',
+          autoReset: true
+        };
+        this.$call('navigator','setNavBarRightItem',params,null);
+      },
+
+      setNaviRightItemIconfont: function (e,parentName) {
+        var params = {
+          // 要设置的图标
+          icon: 'home',
+          // 图标是否从 native 中获取
+          fromNative: 'true',
+          // 客户端中预置的图标是否是 iconFont
+          iconFont: 'true',
+          autoReset: true
+        };
+
+        var navigator = require('@weex-module/navigator');
+        navigator.setNavBarRightItem(params, function(e){
+            console.log(e);
+        });
+      },
+
+
+      clearNaviBarRightItem: function (e,parentName) {
+        this.$call('navigator','clearNavBarRightItem',null,null);
+        //var webElement = this.$el('webview');
+        //this.$call('webview','reload',webElement.ref);
+      },
+
+      setNaviBarMoreItem: function (e,parentName) {
+        var params = {
+        // 需要定制的选项列表
+        items: [ {
+          // 要设置的图标
+          icon: 'home',
+          // 图标是否从 native 中获取
+          fromNative: 'true',
+          // 客户端中预置的图标是否是 iconFont
+          iconFont: 'true',
+          // 要设置的文本
+          text: 'home'
+        }, {
+          icon: 'tb_icon_navibar_default_right',
+          fromNative: 'true',
+          text: 'default List'
+        }, {
+          icon: 'iVBORw0KGgoAAAANSUhEUgAAADgAAAA4BAMAAABaqCYtAAAAGFBMVEX///9bYmxbYmxbYmxbYmxbYmxbYmxbYmwN6C/eAAAAB3RSTlMAufow7PZXjR+zEAAAAFJJREFUeF7tkLENgDAMBB1A1EhZADEBbECXEdIyRNCtT0MBxYuK7q+1zrIv/sVsS5ZCXzlXJSZgirHwoB232QFzDLzYv4Z6rThIvaJxW7d1W3MByIBt+f4fAsMAAAAASUVORK5CYII=',
+          text: 'list'
+        } ],
+        autoReset: true
+        };
+        this.$call('navigator','setNavBarMoreItem',params,null);
+      },
+
+      clearNaviBarMoreItem: function (e,parentName) {
+        nativeLog("clearNavBarMoreItem");
+        this.$call('navigator','clearNavBarMoreItem',null,null);
+      },
+
+      setNaviBarLeftItem: function (e,parentName) {
+        nativeLog("setNaviBarLeftItem");
+
+        var params = {
+          // 要设置的图标
+          title: '< Back',
+          titleColor: 'white',
+          // 图标是否从 native 中获取
+          fromNative: 'true',
+          // 客户端中预置的图标是否是 iconFont
+          iconFont: 'true',
+          autoReset: true
+        };
+        this.$call('navigator','setNavBarLeftItem',params,null);
+      },
+
+      clearNaviBarLeftItem: function (e,parentName) {
+        nativeLog("clearNavBarLeftItem");
+        this.$call('navigator','clearNavBarLeftItem',null,null);
+      },
+
+      setNavBarHidden: function (e,parentName) {
+        nativeLog("setNavBarHidden");
+        var options={
+          hidden:"1",
+          animated:"1"
+        };
+        this.$call('navigator','setNavBarHidden',options,function(e){
+          nativeLog(JSON.stringify(e))
+        });
+      },
+
+      setNavBarShow: function (e,parentName) {
+        nativeLog("setNavBarShow");
+        var options={
+          hidden:"0",
+          animated:"0"
+        };
+        this.$call('navigator','setNavBarHidden',options,function(e){
+          nativeLog(JSON.stringify(e))
+        });
+      },
+
+      startload: function (e) {
+         nativeLog('startload: e = ' + JSON.stringify(e));
+      },
+
+      finishload: function (e) {
+        nativeLog('finishload =  e' + JSON.stringify(e));
+      },
+
+      failload: function(e) {
+        nativeLog('finishload =  e' + JSON.stringify(e));
+      },
+      gotoHomePage:function(e){
+        var vm = this;
+        var params={
+          biz:"shequ"
+        };
+        vm.$dispatch('gotoHomePage', params);
+        nativeLog("gotoHomePage dispatch");
+      },  
+      clickEvent: function (e) {
+        var eventName = e.target.attr.eventName;
+        var parentName = "'"+e.target.attr.parentName+"'";
+        eval("this."+eventName+"(e,"+parentName+");");
+      },
+
+      getTabUrl:function (tabName){
+        var bundleUrl = this.appConfig.bundleUrl;
+        var randomIndex = bundleUrl.lastIndexOf("random=");
+        if(randomIndex>=0){
+          bundleUrl=bundleUrl.substring(0,randomIndex-1);
+        }
+
+        var lastIndex = bundleUrl.lastIndexOf('/build/');
+        if(lastIndex<0){
+          var message = "link not contains `/build/`;bundleUrl:"+bundleUrl;
+          var okTitle = "OK";
+          var params = {
+            'message':message,
+            'okTitle':okTitle,
+          }
+          this.$call('modal','alert',params,function() {});
+          return;
+        }
+
+        var prefix=bundleUrl.substring(0,lastIndex + 7);
+        var suffix=bundleUrl.substring(lastIndex + 7,bundleUrl.length);
+        var jsIndex=suffix.indexOf(".js");
+        if(jsIndex>=0){
+          suffix=suffix.substring(jsIndex,suffix.length);
+        }
+        var transferUrl = prefix+tabName+suffix;
+        return transferUrl;
+      },
+    }
+  }
+</script>

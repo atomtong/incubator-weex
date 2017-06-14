@@ -1,0 +1,105 @@
+<template>
+  
+<TC_Support_Scroller>
+    <TC_Support_MainTitle title="TC_Input_Event"></TC_Support_MainTitle>
+    
+    <list class="list">
+      <cell>
+        <div class="list-cell-div">
+          <input class="list-cell-input font" id="click1" flag-id="click1" type="text" placeholder="onclick" onclick="eventClick"></input>
+        </div>
+      </cell>
+      <cell>
+        <div class="list-cell-div">
+          <input class="list-cell-input font" id="input1" flag-id="input1" type="text" placeholder="oninput" oninput="eventInput"></input>
+        </div>
+      </cell>
+      <cell>
+        <div class="list-cell-div">
+          <input class="list-cell-input font" id="change1" flag-id="change1" type="text" placeholder="onchange" onchange="eventChange"></input>
+        </div>
+      </cell>
+      <cell>
+        <div class="list-cell-div">
+          <input class="list-cell-input font" id="focus1" flag-id="focus1" type="text" placeholder="onfocus" onfocus="eventFocus"></input>
+        </div>
+      </cell>
+      <cell>
+        <div class="list-cell-div">
+          <input class="list-cell-input font" id="blur1" flag-id="blur1" type="text" placeholder="onblur" onblur="eventBlur"></input>
+        </div>
+      </cell>
+      <cell>
+        <div class="list-cell-div">
+          <input class="list-cell-input font" id="nouse1" flag-id="nouse1" type="text" placeholder="for blur"></input>
+        </div>
+      </cell>
+      <cell>
+        <TC_Support_SubTitle title="event result: "></TC_Support_SubTitle>
+        <div class="list-cell-div">
+          <div style="flex-direction: row;margin-top:10;">
+            <text style="font-size:30;margin-left: 10;" class="font">onclick：</text>
+            <text style="font-size:30;margin-left: 10;color:#0000ff;" class="font">{{clickTxt}}</text>
+          </div>
+          <div style="flex-direction: row;margin-top:10;">
+            <text style="font-size:30;margin-left: 10;" class="font">oninput：</text>
+            <text style="font-size:30;margin-left: 10;color:#0000ff;" class="font">{{inputTxt}}</text>
+          </div>
+          <div style="flex-direction: row;margin-top:10;">
+            <text style="font-size:30;margin-left: 10;" class="font">onchange：</text>
+            <text style="font-size:30;margin-left: 10;color:#0000ff;" class="font">{{changeTxt}}</text>
+          </div>
+          <div style="flex-direction: row;margin-top:10;">
+            <text style="font-size:30;margin-left: 10;" class="font">onfocus：</text>
+            <text style="font-size:30;margin-left: 10;color:#0000ff;" class="font">{{focusTxt}}</text>
+          </div>
+          <div style="flex-direction: row;margin-top:10;">
+            <text style="font-size:30;margin-left: 10;" class="font">onblur：</text>
+            <text style="font-size:30;margin-left: 10;color:#0000ff;" class="font">{{blurTxt}}</text>
+          </div>
+        </div>
+      </cell>
+    </list>
+    
+  </TC_Support_Scroller>
+</template>
+ 
+<style>
+
+
+.font{font-family: Times New Roman;}
+  .title{margin-top: 10;margin-left: 10;margin-bottom:10; font-size: 40; font-weight: bold;}
+  .div-split{height: 1; border-width: 1; border-style:dashed; border-color: #375830;}
+  .list{width: 750;flex-direction: column;overflow: hidden;height:900;}
+  .list-cell-div{flex-direction: column;background-color:#ffffff;justify-content:center;overflow: hidden; }
+  .list-cell-input{ font-size: 25; margin-top:15; margin-left: 15; margin-bottom:15; margin-right:15; text-decoration: underline; color: #33a3dc;width: 500;height: 30; border-width: 1;border-color:#cccccc; overflow: hidden;}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      clickTxt:'',
+      inputTxt:'',
+      changeTxt:'',
+      focusTxt:'',
+      blurTxt:'',
+    },
+    methods: {
+      eventClick:function (e) {
+        this.clickTxt="success: "+ e.value //+" "+e.timestamp;
+      },
+      eventInput:function (e) {
+        this.inputTxt="success: "+ e.value //+" "+e.timestamp;
+      },
+      eventChange:function(e){
+        this.changeTxt="success: "+ e.value //+" "+e.timestamp;
+      },  
+      eventFocus:function (e) {
+        this.focusTxt="success: "+ e.value //+" "+e.timestamp;
+      }, 
+      eventBlur:function (e) {
+        this.blurTxt="success: "+ e.value //+" "+e.timestamp;
+      }
+    }
+  }
+</script>

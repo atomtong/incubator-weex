@@ -164,6 +164,7 @@
     "weex-vdom-tester": "^0.2.0",
     "weex-wd": "^1.0.23",
     "wwp": "^0.3.5",
-    "xmldom": "^0.1.27"
+    "xmldom": "^0.1.27",
+    "urlencode":"^1.1.0"
   }
 }

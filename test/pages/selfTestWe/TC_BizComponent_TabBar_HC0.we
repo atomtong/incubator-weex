@@ -1,0 +1,341 @@
+<template>
+  <div class="wrapper" ontabselected="goTab" onclickmoreitem="onclickmoreitem">
+    <embed class="content" style="visibility:{{visibility}}" repeat={{tabItems}} item-id={{itemId}} src={{src}}></embed>
+    <tabbar class="tabbar" tab-items={{tabItems}} selected-index={{index}} style="background-color:#ffff00;" ontabselected="goTab"></tabbar>
+  </div>
+</template>
+
+<style>
+    .wrapper {
+        width: 750; 
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        right: 0; 
+        bottom: 0;
+    }
+    .content { 
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        right: 0; 
+        bottom: 0; 
+        margin-top: 0;  
+        margin-bottom: 100;
+    }
+    .tabbar { 
+        flex-direction: row; 
+        position: fixed; 
+        bottom: 0; 
+        left: 0; 
+        right: 0;  
+        height: 100;
+    }
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      index: 0,
+      selectedColor: '#ff0000',
+      unselectedColor: '#000000',
+      navibarMoreBtn:[
+        {
+          icon: 'tm_quick_menu_share.png',
+          fromNative: 'true',
+          iconFont: 'true',
+          text: '分享'
+        },
+        {
+          icon: 'home',
+          fromNative: 'true',
+          iconFont: 'true',
+          text: 'home'
+        },
+        {
+          icon: 'iVBORw0KGgoAAAANSUhEUgAAAKIAAAAxCAYAAABZAHL2AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGQTIyRTA2QTNDNTQxMUU2OUM3OEEzOTYxNjIzQkVBNiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGQTIyRTA2QjNDNTQxMUU2OUM3OEEzOTYxNjIzQkVBNiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZBMjJFMDY4M0M1NDExRTY5Qzc4QTM5NjE2MjNCRUE2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkZBMjJFMDY5M0M1NDExRTY5Qzc4QTM5NjE2MjNCRUE2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+dgY27AAACBFJREFUeNrsXQmM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',
+          text: '爱逛街'
+        },
+      ],
+      tabPages:[
+          'TC_BizComponent_TabBar_Item0.js',
+          'TC_BizComponent_TabBar_Item1.js',
+          'TC_BizComponent_TabBar_Item2.js',
+          'TC_BizComponent_TabBar_Item3.js',
+          'TC_BizComponent_TabBar_Item4.js',
+        ],
+      tabItems: [
+        {
+          index: 0,
+          title: '主会场0',
+          titleColor: '#00ff00',
+          titleSelectedColor: '#ff0000',
+          icon: '',
+          image: 'http://gtms01.alicdn.com/tps/i1/TB1qw.hMpXXXXagXXXX9t7RGVXX-46-46.png',
+          selectedImage: 'http://gtms04.alicdn.com/tps/i4/TB16jjPMpXXXXazXVXX9t7RGVXX-46-46.png',
+          src: '',
+          itemId: '0',
+          visibility: 'hidden',
+          iconSize: 68,
+          fontSize: 24,
+        },
+        {
+          index: 1,
+          title: '压测',
+          titleColor: '#00ff00',
+          titleSelectedColor: '#ff0000',
+          icon: '',
+          image: 'http://gtms03.alicdn.com/tps/i3/TB1LEn9MpXXXXaUXpXX9t7RGVXX-46-46.png',
+          selectedImage: 'http://gtms02.alicdn.com/tps/i2/TB1qysbMpXXXXcnXXXX9t7RGVXX-46-46.png',
+          src: 'https://pages.tmall.com/wow/portal/act/mainhall-w-bench-300?wh_weex=true',
+          itemId: '1',
+          visibility: 'hidden',
+          iconSize: 68,
+          fontSize: 24,
+        },
+        {
+          index: 2,
+          title: '清单',
+          titleColor: '#00ff00',
+          titleSelectedColor: '#ff0000',
+          icon: '',
+          image: 'http://gtms01.alicdn.com/tps/i1/TB1B0v5MpXXXXcvXpXX9t7RGVXX-46-46.png',
+          selectedImage: 'http://gtms04.alicdn.com/tps/i4/TB1NxY5MpXXXXcrXpXX9t7RGVXX-46-46.png',
+          src: 'https://pre-wormhole.tmall.com/wh/fragment/ceshi/weex302?wh_weex=true&wh_redirect=true',
+          itemId: '2',
+          visibility: 'hidden',
+          iconSize: 68,
+          fontSize: 24,
+        },
+        {
+          index: 3,
+          title: 'vebview1',
+          titleColor: '#00ff00',
+          titleSelectedColor: '#ff0000',
+          icon: '',
+          image: 'https://img.alicdn.com/tps/i1/TB1TPVsLXXXXXaVXVXX3p3hIpXX-72-72.png',
+          selectedImage: 'https://img.alicdn.com/tps/i2/TB1SW4tLXXXXXanXVXX3p3hIpXX-72-72.png',
+          src: 'https://pre-wormhole.tmall.com/wh/fragment/ceshi/weex302?wh_weex=true&wh_clientReplace=true',
+          itemId: '3',
+          visibility: 'hidden',
+          iconSize: 68,
+          fontSize: 24,
+        },
+        {
+          index: 4,
+          title: 'webview2',
+          titleColor: '#00ff00',
+          titleSelectedColor: '#ff0000',
+          icon: '',
+          image: 'https://img.alicdn.com/tps/i1/TB1TPVsLXXXXXaVXVXX3p3hIpXX-72-72.png',
+          selectedImage: 'https://img.alicdn.com/tps/i2/TB1SW4tLXXXXXanXVXX3p3hIpXX-72-72.png',
+          src: 'https://pre-wormhole.tmall.com/wh/fragment/ceshi/weex302?wh_weex=true&wh_clientOpen=true',
+          itemId: '4',
+          visibility: 'hidden',
+          iconSize: 68,
+          fontSize: 24,
+        }
+      ],
+      tabConfigs:[
+        {
+          "tabImg": "https://img.alicdn.com/tps/i1/TB1TPVsLXXXXXaVXVXX3p3hIpXX-72-72.png",
+          "tabSelectedImg": "https://img.alicdn.com/tps/i2/TB1SW4tLXXXXXanXVXX3p3hIpXX-72-72.png",
+          "tabText": "主会场",
+          "tabTextColor": "#999999",
+          "tabTextSelectedColor": "#d61301",
+          "pageUrl": "https://www.tmall.com/wow/act/15303/nianhuo-main?demoteShow=0",
+          "pageUt": "Page_2015MainStage",
+          "pageSpm": "a2141.7786238.tab.1",
+          "pageName": "huichang/tmmainpre",
+          // "naviCenterText":  'nike',
+          'naviCenterBase64Img': 'iVBORw0KGgoAAAANSUhEUgAAAKIAAAAxCAYAAABZAHL2AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGQTIyRTA2QTNDNTQxMUU2OUM3OEEzOTYxNjIzQkVBNiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGQTIyRTA2QjNDNTQxMUU2OUM3OEEzOTYxNjIzQkVBNiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZBMjJFMDY4M0M1NDExRTY5Qzc4QTM5NjE2MjNCRUE2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkZBMjJFMDY5M0M1NDExRTY5Qzc4QTM5NjE2MjNCRUE2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+dgY27AAACBFJREFUeNrsXQmM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',
+          "naviCenterTextColor":  '#00ffff',
+          // "naviCenterImg": "https://img.alicdn.com/i2/2/TB1GAvUKVXXXXa0XpXXSutbFXXX.jpg_170x170.jpg_.webp",
+          "naviCenterClickURL": "https://store.taobao.com/shop/view_shop.htm?spm=a21bo.50862.201863-5.d7.5gh6jk&pvid=3e269a96-3c64-4a6f-b794-9eda81ed23a6&abbucket=_AB-M65_B5&acm=03014.1003.1.765824&aldid=EBPXnAiW&user_number_id=890482188&abtest=_AB-LR65-PR65&brandId=20578&scm=1007.13143.30625.100200300000000&pos=7",
+          "naviCenterUt": 'Search',
+          "naviRightImg":  'https://img.alicdn.com/tps/TB1gjYbLpXXXXaTXFXXXXXXXXXX-90-90.jpg_120x120.jpg_.webp',
+          "naviRightClickURL":  'https://daigou.taobao.com/search.htm?spm=a21bo.50862.201879-item-1003.6.5gh6jk&q=2016%E9%99%90%E9%87%8F&scm=1007.12802.43512.100200300000000&pvid=6b0fcc2b-0df4-40cb-b0e6-3768c13be6a3',
+          "naviRightUt": 'Search',
+          "naviBarBgColor": '#ffff00',
+          "naviBtnColor": "#ff00ff",
+          "naviBottomColor":  '#ff0000',
+        }, {
+          "tabImg": "https://img.alicdn.com/tps/i1/TB1TPVsLXXXXXaVXVXX3p3hIpXX-72-72.png",
+          "tabSelectedImg": "https://img.alicdn.com/tps/i2/TB1SW4tLXXXXXanXVXX3p3hIpXX-72-72.png",
+          "tabText": "压测",
+          "tabTextColor": "#999999",
+          "tabTextSelectedColor": "#d61301",
+          "pageUrl": "https://www.tmall.com/wow/act/15303/nianhuo-main?demoteShow=0",
+          "pageUt": "Page_2015MainStage",
+          "pageSpm": "a2141.7786238.tab.1",
+          "pageName": "huichang/tmmainpre",
+          "naviCenterImg": "https://img.alicdn.com/tps/TB1ER6kKVXXXXcoXpXXXXXXXXXX-765-84.png",
+          "naviCenterClickURL": "tmall://page.tm/searchinput",
+          "naviBarBgColor": "#f01500",
+          "naviBtnColor": "#ffffff",
+          "naviCenterTextColor": "#ffff00",
+          "naviCenterUt": "Search",
+        },  {
+          "tabImg": "https://img.alicdn.com/tps/i2/TB1iqtmLXXXXXanaXXX3p3hIpXX-72-72.png",
+          "tabSelectedImg": "https://img.alicdn.com/tps/i1/TB19Q4KLXXXXXXbXpXX3p3hIpXX-72-72.png",
+          "tabText": "必抢",
+          "tabTextColor": "#999999",
+          "tabTextSelectedColor": "#d61301",
+          "pageUrl": "http://h5.m.taobao.com/2015-0121/rush/index.html?demoteShow=0",
+          "pageUt": "Page_BiQiang",
+          "pageSpm": "a2141.7786238.tab.3",
+          "naviCenterText": "必抢",
+          "naviBarBgColor": "#f01500",
+          "naviBtnColor": "#ffffff",
+          "naviRightImg": "http://gtms01.alicdn.com/tps/i1/TB1CeKZJFXXXXaCXpXX0SkhIpXX-72-75.png",
+          "naviRightClickURL": "https://s.m.taobao.com/h5entry?from=huichang",
+          "naviBottomColor": "#dc0C37",
+        }, {
+          "tabImg": "https://img.alicdn.com/tps/i4/TB1VVpsLXXXXXa8XVXX3p3hIpXX-72-72.png",
+          "tabSelectedImg": "https://img.alicdn.com/tps/i3/TB1POxSLXXXXXXYXXXX3p3hIpXX-72-72.png",
+          "tabText": "我的年货",
+          "tabTextColor": "#999999",
+          "tabTextSelectedColor": "#d61301",
+          "pageUrl": "https://www.tmall.com/wow/act/15291/mygifts?demoteShow=0",
+          "pageUt": "Page_MyYear",
+          "pageSpm": "a2141.7786238.tab.4",
+          "naviCenterText": "我的年货",
+          "naviBarBgColor": "#f01500",
+          "naviBtnColor": "#ffffff",
+          "naviRightImg": "http://gtms01.alicdn.com/tps/i1/TB1CeKZJFXXXXaCXpXX0SkhIpXX-72-75.png",
+          "naviRightClickURL": "https://s.m.taobao.com/h5entry?from=huichang",
+          "naviBottomColor": "#dc0C37",
+        }, {
+          "tabImg": "https://img.alicdn.com/tps/i4/TB1VVpsLXXXXXa8XVXX3p3hIpXX-72-72.png",
+          "tabSelectedImg": "https://img.alicdn.com/tps/i3/TB1POxSLXXXXXXYXXXX3p3hIpXX-72-72.png",
+          "tabText": "webview2",
+          "tabTextColor": "#999999",
+          "tabTextSelectedColor": "#d61301",
+          "pageUrl": "https://www.tmall.com/wow/act/15291/mygifts?demoteShow=0",
+          "pageUt": "Page_MyYear",
+          "pageSpm": "a2141.7786238.tab.4",
+          "naviCenterText": "手淘",
+          "naviBarBgColor": "#f01500",
+          "naviBtnColor": "#ffffff",
+          "naviRightImg": "http://gtms01.alicdn.com/tps/i1/TB1CeKZJFXXXXaCXpXX0SkhIpXX-72-75.png",
+          "naviRightClickURL": "https://s.m.taobao.com/h5entry?from=huichang",
+          "naviBottomColor": "#dc0C37",
+        }
+      ],
+    },
+    created: function() {
+        var hc = require('@weex-module/hc');
+        hc.setTBHCConfig({
+          "configItems": this.tabConfigs,
+          "version": "85"
+          });
+
+        // hc.setTabIndex('0');
+
+        var bundleUrl = this.$getConfig().bundleUrl;
+            
+        if (bundleUrl.indexOf("wh_act_nativebar=0") > 0){
+          this.index = 0;
+        }
+        else if (bundleUrl.indexOf("wh_act_nativebar=1") > 0){
+          this.index = 0;
+        } 
+        else if (bundleUrl.indexOf("wh_act_nativebar=2") > 0){
+          this.index = 1;
+        }
+        else if (bundleUrl.indexOf("wh_act_nativebar=3") > 0){
+          this.index = 2;
+        }
+        else if (bundleUrl.indexOf("wh_act_nativebar=4") > 0){
+          this.index = 3;
+        }
+        else if (bundleUrl.indexOf("wh_act_nativebar=5") > 0){
+          this.index = 4;
+        }
+    },
+    methods: {
+      ready: function (e) {
+        // 1.set tab item src
+        var vm = this;
+        var appConfig = vm.$getConfig();
+        var bundleUrl = appConfig.bundleUrl;
+
+        var lastIndex = bundleUrl.lastIndexOf('/');
+        var prifixUrl = bundleUrl.substring(0,lastIndex);
+        for (var i = 0; i<this.tabItems.length; i++) {
+          if (this.tabItems[i].src === '') {
+            this.tabItems[i].src = prifixUrl+ '/'+ this.tabPages[i];
+          }
+        };
+      },
+      goTab: function(e) {
+        nativeLog("goTab: " + JSON.stringify(e));
+        this.setMoreBtn(e.index)
+      },
+      setMoreBtn:function(index) {
+        // set navibar right more btn param
+        var items = this.navibarMoreBtn
+        // items[2].text = this.tabItems[index].title;
+        items[2].text = this.tabConfigs[index].tabText;
+
+        // set navibar right more btn
+        var param = {
+          items: items
+        };
+        var navigator = require('@weex-module/navigator');
+        navigator.setNavBarMoreItem(param, function(e){});
+      },
+      shareFunc:function() {
+        // 获得分享url
+        var appConfig = this.$getConfig();
+        var bundleUrl = appConfig.bundleUrl;
+        nativeLog("bundleUrl: " + bundleUrl);
+
+        // 获得分享text
+        var tabDetail = this.tabConfigs[this.index]
+        var shareTxt = tabDetail.tabText + ' - 分享~\(≧▽≦)/~啦啦啦'
+
+        var tmUrl = "http://taobao.com";
+        var params = {
+          "mobile-image": "http://gtms03.alicdn.com/tps/i3/TB1ZEh2HpXXXXafXFXXc8PZ9XXX-130-200.png",
+          "iphone-link": tmUrl,
+          "iphone-version": "4.9.0,4.9.1",
+          "tmallapp-link": tmUrl,
+          "all-link": tmUrl,
+          "share-title": "分享标题",
+          "share-intro": "分享内容噢噢噢噢",
+          "share-bizid":"bizid",
+          "share-bizlogo":"cdnurl",
+          "require-tmall": "false",
+          "share-scene": "ShareWebTest",
+          "share-source": "shareSource"
+        }
+        this.$call('share', 'doShare', params, function (e) {});
+
+        // var params = {
+        //   title: '憨豆',
+        //   text: shareTxt,
+        //   url: 'http://taobao.com',
+        //   image: 'http://img0.bdstatic.com/img/image/4359213b07eca806538f43aff0495dda144ac3482d1.jpg',
+        //   targets:'all',
+        // };
+        // this.$call('share', 'doShare', params, function (e) {});
+      },
+      onclickmoreitem:function(e) {
+          //选中的 menu index;
+          var index = e.index;
+          var text = this.navibarMoreBtn[index].text
+          this.$call('modal', 'toast', {'message':text})
+          if (text === '分享') {
+            this.shareFunc();
+          }
+      },
+      viewappear: function () {
+        this.$call('modal','alert',{'message':'pageHC-viewappear'}, function() {});
+      },
+      viewdisappear: function () {
+        this.$call('modal','alert',{'message':'pageHC-viewdisappear'}, function() {});
+      },
+    }
+  }
+</script>

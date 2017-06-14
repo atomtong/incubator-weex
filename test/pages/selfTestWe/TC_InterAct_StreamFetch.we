@@ -1,0 +1,183 @@
+<template>
+  <TC_Support_Scroller>
+    <TC_Support_MainTitle title="TC_InterAct_StreamFetch"></TC_Support_MainTitle>
+    <scroller style="height:640; border-width:3; border-style:solid; border-color:#FF00FF;margin:10;">
+      <text class="font">{{result}}</text>
+    </scroller>
+    <scroller style="height:320; border-width:3; border-style:solid; border-color:#FF00FF;margin:10;">
+      <div repeat="btnSendType" style="flex-direction:row">
+        <text onclick="updateSendType" flagid="{{index}}" repeat="row" style="width:210; height:50;text-align: center; border-width: 1;border-color: #696969;border-style:solid;border-radius:5; margin:10; background-color: {{bgc}}">{{value}}</text>
+      </div>
+      <div repeat="btnList" style="flex-direction:row">
+        <text onclick="update" flagid="{{index}}" repeat="row" style="width:210; height:50;text-align: center; border-width: 1;border-color: #696969;border-style:solid;border-radius:5; margin:10; background-color: {{bgc}}">{{value}}</text>
+      </div>
+    </scroller>
+  </TC_Support_Scroller>
+</template>
+
+<style>
+.font{font-size: 25;font-family: Times New Roman;}
+.panel {
+    margin-bottom: 20px;
+    border-color: rgb(40, 96, 144);
+    border-width: 1px;
+    background-color: rgb(40, 96, 144);
+    color: #ffffff;
+    font-size:40px;
+  }
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      result: 'loading...',
+      btnList: [
+        {
+            row:
+            [
+                {value: "stream get",bgc:'#EEEEEE',index:0},
+                {value: "stream post",bgc:'#EEEEEE',index:1},
+                {value: "stream put",bgc:'#EEEEEE',index:2},
+            ],
+        },
+        {
+            row:
+            [
+                {value: "stream delete",bgc:'#EEEEEE',index:3},
+                {value: "stream head",bgc:'#EEEEEE',index:4},
+                {value: "stream patch",bgc:'#EEEEEE',index:5},
+            ],
+        },
+      ],
+      btnSendType:[
+        {
+            row:
+            [
+                {value: "json",bgc:'#EEEEEE',index:0},
+                {value: "text",bgc:'#EEEEEE',index:1},
+                {value: "jsonp",bgc:'#EEEEEE',index:2},
+            ],
+        },
+      ],
+      sendtype:"text",
+      JSONP_URL :'http://jsfiddle.net/echo/jsonp/?callback=anything&result=content_in_response'
+    },
+    methods: {  
+      ready:function(){
+        
+      },
+      updateSendType: function (e) {
+        var self = this
+        var index = e.target.attr.flagid
+        for (var i = 0; i < self.btnSendType.length; i++) {
+            var row=self.btnSendType[i];
+            var columnlist=row.row;
+            for (var j = 0; j < columnlist.length; j++) {
+                var column=columnlist[j];
+                if (column.index === index) {
+                    column.bgc = '#B2DFEE'
+                    self.sendtype=column.value
+                }
+                else {
+                    column.bgc = '#EEEEEE'
+                }
+            }
+        }
+      },
+
+      update: function (e) {
+        var self = this
+        var GET_URL = 'http://httpbin.org/get';
+        var POST_URL = 'http://httpbin.org/post';
+        var PUT_URL = 'http://httpbin.org/put';
+        var DELETE_URL = 'http://httpbin.org/delete';
+        var HEAD_URL = 'http://httpbin.org/status/418';
+        var PATCH_URL = 'http://httpbin.org/patch';
+        
+        var index = e.target.attr.flagid
+        for (var i = 0; i < self.btnList.length; i++) {
+            var row=self.btnList[i];
+            var columnlist=row.row;
+            for (var j = 0; j < columnlist.length; j++) {
+                var column=columnlist[j];
+                if (column.index === index) {
+                    column.bgc = '#B2DFEE'
+                    var url="";
+                    switch (index) {
+                        case 0:
+                            url=GET_URL;
+                            self.result = "start "+url+" at type:"+this.sendtype;
+                            self.streamFetch("GET",GET_URL);
+                            break;
+                        case 1:
+                            url=POST_URL;
+                            self.result = "start "+url+" at type:"+this.sendtype;
+                            self.streamFetch("POST",POST_URL);
+                            break;
+                        case 2:
+                            url=PUT_URL;
+                            self.result = "start "+url+" at type:"+this.sendtype;
+                            self.streamFetch("PUT",PUT_URL);
+                            break;
+                        case 3:
+                            url=DELETE_URL;
+                            self.result = "start "+url+" at type:"+this.sendtype;
+                            self.streamFetch("DELETE",DELETE_URL);
+                            break;
+                        case 4:
+                            url=HEAD_URL;
+                            self.result = "start "+url+" at type:"+this.sendtype;
+                            self.streamFetch("HEAD",HEAD_URL);
+                            break;
+                        case 5:
+                            url=PATCH_URL;
+                            self.result = "start "+url+" at type:"+this.sendtype;
+                            self.streamFetch("PATCH",PATCH_URL);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else {
+                    column.bgc = '#EEEEEE'
+                }
+            }
+        }
+      },
+
+      streamFetch:function(stype,surl){
+        var stream = require('@weex-module/stream');
+        var me = this;
+        if(this.sendtype=="jsonp"){
+          surl=this.JSONP_URL;
+        }
+        stream.fetch({
+          method: stype,
+          url: surl,
+          type:this.sendtype,
+          timeout : 10000
+        }, function(ret) {
+          nativeLog(JSON.stringify(ret)+ typeof(ret.data));
+          if(stype=="HEAD"){
+            // if(ret.statusText != 'I\'m a teapot'){
+            //   me.result = "request failed";
+            // }else{
+              console.log('get:'+ret);
+              me.result = ret.statusText;
+            // }
+          }else{
+            if(!ret.ok){
+              me.result = "request failed:"+ (typeof(ret.data)!='undefined'?JSON.stringify(ret.data):"");
+            }else{
+              console.log('get:'+ret);
+              me.result = "data type:"+ typeof(ret.data) + ";  " +JSON.stringify(ret.data);
+            }
+          }
+        },function(response){
+          console.log('get in progress:'+JSON.stringify(response));
+          me.result = JSON.stringify(response);
+        });
+      }
+    }
+  }
+</script>

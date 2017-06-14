@@ -1,0 +1,69 @@
+<template>
+  
+  <TC_Support_Scroller>
+    <TC_Support_MainTitle title="TC_Gesture_Click"></TC_Support_MainTitle>
+    <div style="flex-direction: column;">
+      <list class="list" style="height:900;">
+        <cell>
+          <div class="list-cell-div">
+            <text class="list-cell-input font" id="click1" flag-id="click1" onclick="eventClick" >Click me</text>
+          </div>
+        </cell>
+        <cell>
+          <TC_Support_SubTitle title="Event Result:"></TC_Support_SubTitle>
+          <div class="list-cell-div">
+          	<div style="flex-direction: row;margin-top:10;">
+              <text class="font" style="font-size:30;margin-left: 10;flex:1;">Ref: </text>
+              <text class="font" style="font-size:30;margin-left: 10;color:#0000ff;width:500;">{{targetRef}}</text>
+            </div>
+          	<div style="flex-direction: row;margin-top:10;">
+              <text class="font" style="font-size:30;margin-left: 10;flex:1;">Type: </text>
+              <text class="font" style="font-size:30;margin-left: 10;color:#0000ff;width:500;">{{targetType}}</text>
+            </div>
+            <div style="flex-direction: row;margin-top:10;">
+              <text class="font" style="font-size:30;margin-left: 10;flex:1;">Attr: </text>
+              <text class="font" style="font-size:30;margin-left: 10;color:#0000ff;width:500;">{{targetAttr}}</text>
+            </div>
+            <div style="flex-direction: row;margin-top:10;">
+              <text class="font" style="font-size:30;margin-left: 10;flex:1;">Event: </text>
+              <text class="font" style="font-size:30;margin-left: 10;color:#0000ff;width:500;">{{targetEvent}}</text>
+            </div>
+          </div>
+        </cell>
+      </list>
+    </div>
+    </TC_Support_Scroller>
+</template>
+ 
+<style>
+
+
+
+  .font{font-family: Times New Roman;font-size: 30;}
+  .list{width: 750; flex-direction: column;overflow: hidden;}
+  .list-cell-div{flex-direction: column;background-color:#ffffff;justify-content:center;overflow: hidden; }
+  .list-cell-input{margin:15; text-decoration: underline; color: #33a3dc;width: 500;height: 50; border-width: 3;border-color:#cccccc; overflow: hidden; border-style: solid; text-align: center; border-radius: 5;}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      targetAttr:'',
+      targetStyle:'',
+      clickTime:'',
+      targetRef:'',
+      targetType:'',
+      targetEvent:'',
+    },
+    methods: {
+      eventClick:function (e) {
+        //可通过 debugger 查看e相关的属性
+        nativeLog(e.target)
+      	this.targetRef = e.target.ref;
+      	this.targetType = e.target.type;
+      	this.targetAttr = JSON.stringify(e.target.attr);
+      	this.targetEvent = e.type;
+      },
+    }
+  }
+</script>

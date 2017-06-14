@@ -1,0 +1,38 @@
+<template>
+  <div style="flex-direction: column;">
+    <TC_Support_MainTitle title="SelfTest__Component"></TC_Support_MainTitle>
+    <list class="list">
+      <cell repeat="{{script_list}}" append="tree">
+        <TC_Support_IndexItem text="{{textDesc}}"></TC_Support_IndexItem>
+      </cell>
+    </list>
+  </div>
+</template>
+ 
+<style>
+  .list{width: 750;height:1134; border-width: 1;border-color: #eeeeee;flex-direction: column;overflow: hidden;}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      script_list: [],
+      str: "TC_A_Event,TC_Animation_Scale,TC_AppendTree_Root,TC_Image_Update,TC_Input_Event,TC_List_RefreshAndLoading,TC_Modal_Alert,TC_Recycler_Waterfall,TC_RichText_A_Span_Img,TC_Scroller_DirectHorizontal,TC_Scroller_Fixed_Top,TC_Scroller_RefreshAndLoading,TC_Slider_Update_Index,TC_Text_Emoji,TC_BizComponent_Mask,TC_BizComponent_NavPage,TC_BizComponent_TabBar_HC0,TC_BizModule_NavigationBar",
+    },
+    methods: {
+      ready: function () {
+        var arr = this.str.split(",");
+        var newArr=[];
+        var itemObj = {};
+        arr.forEach(function (itemStr, index){
+           if(itemStr != ''){
+              itemObj.textDesc=itemStr;
+              newArr.push(itemObj);
+              itemObj = {};
+           }
+        }); 
+        this.script_list = newArr;
+      },
+    }
+  }
+</script>

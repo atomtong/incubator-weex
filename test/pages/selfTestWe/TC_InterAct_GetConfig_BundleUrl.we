@@ -1,0 +1,170 @@
+<template>
+  
+  <TC_Support_Scroller>
+    <TC_Support_MainTitle title="TC_InterAct_GetConfigSync"></TC_Support_MainTitle>
+    <div class="div-split"></div>
+    <div style="flex-direction: column;">
+      <list class="list" style="height:900;">
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >deviceWidth：</text>
+              <text class="list-cell-link">{{_deviceWidth}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >deviceHeight：</text>
+              <text class="list-cell-link">{{_deviceHeight}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >weexVersion：</text>
+              <text class="list-cell-link">{{_weexVersion}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >osVersion：</text>
+              <text class="list-cell-link">{{_osVersion}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >platform：</text>
+              <text class="list-cell-link">{{_platform}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >appName：</text>
+              <text class="list-cell-link">{{_appName}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >appVersion：</text>
+              <text class="list-cell-link">{{_appVersion}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >deviceModel：</text>
+              <text class="list-cell-link">{{_deviceModel}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+        <cell append="tree">
+          <div class="list-cell-div">
+            <div style="flex-direction: row;">
+              <text class="list-cell-desc" >bundleUrl：</text>
+              <text class="list-cell-link">{{_bundleUrl}}</text>
+            </div>
+            <div class="div-split"></div>
+          </div>
+        </cell>
+      </list>
+    </div>
+    
+    </TC_Support_Scroller>
+</template>
+<style>
+
+
+.discript {flex: 1; color: #000000; font-weight: bold; font-size:30;background-color: #37dd23;}
+ .title{margin-top: 10;margin-left: 10;margin-bottom:10; font-size: 40; font-weight: bold;text-align: center;;}
+  .div-split{height: 2; border-width: 1; border-style:dashed; border-color: #375830;}
+  .list{width: 750; border-width: 1;border-color: #eeeeee;flex-direction: column;overflow: hidden;}
+  .list-cell-div{flex-direction: column;background-color:#ffffff;justify-content:center; }
+  .list-cell-link{ font-size: 30; margin-top:15; margin-left: 15; margin-bottom:15; flex:2;}
+  .list-cell-desc{ font-size: 30; margin-top:15; margin-left: 15; margin-bottom:15; font-weight: bold;flex: 1;}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      appConfig:'',
+      _deviceWidth:'',
+      _deviceHeight:'',
+      _weexVersion:'',
+      _osVersion:'',
+      _platform:'',
+      _appName:'',
+      _appVersion:'',
+      _deviceModel:'',
+      _bundleUrl:'',
+    },
+    methods: {
+      ready: function () {
+        this.appConfig = this.$getConfig();
+        this._deviceWidth=this.appConfig.env.deviceWidth;
+        this._deviceHeight=this.appConfig.env.deviceHeight;
+        this._weexVersion=this.appConfig.env.weexVersion;
+        this._osVersion=this.appConfig.env.osVersion;
+        this._platform=this.appConfig.env.platform;
+        this._appName=this.appConfig.env.appName;
+        this._appVersion=this.appConfig.env.appVersion;
+        this._deviceModel=this.appConfig.env.deviceModel;
+        var lastIndex = this.appConfig.bundleUrl.lastIndexOf('random=');
+        if(lastIndex>=0){
+          this._bundleUrl=this.appConfig.bundleUrl.substring(0,lastIndex-1);
+        }else{
+          this._bundleUrl=this.appConfig.bundleUrl;
+        }
+
+        var wxIndex = this._bundleUrl.lastIndexOf('_wx_tpl');
+        if(wxIndex>=0){
+          var first = this._bundleUrl.substring(0,wxIndex-1);
+          var f_domain = first.split('/'); //以“/”进行分割
+          if( f_domain[2] ) {
+              f_domain = f_domain[2];
+          } else {
+              f_domain = ''; //如果url不正确就取空
+          }
+          var last = this._bundleUrl.substring(wxIndex+7,this._bundleUrl.length);
+          var l_domain = last.split('/'); //以“/”进行分割
+          if( l_domain[2] ) {
+              l_domain = l_domain[2];
+          } else {
+              l_domain = ''; //如果url不正确就取空
+          }
+          if(f_domain==l_domain){
+            var message = "bundleUrl error";
+            var okTitle = "OK";
+            var params = {
+              'message':message,
+              'okTitle':okTitle,
+            }
+            this.$call('modal','alert',params,function() {});
+            return;
+          }
+
+        }
+
+      },
+    }
+  }
+</script>

@@ -1,0 +1,16 @@
+<template>
+  <scroller class="div">
+    <web style="flex:1;height:1100" src = "http://down2.uc.cn/ucbrowser/v2/platform/android.php?pub=ucadmin@g1&title=&link=&url=&PHPSESSID=ubcbfe17msjt1jb54pp6s10b44"></web>
+  </scroller>
+</template>
+
+<style>
+  .div {
+    width: 750;
+    justify-content: space-between;
+    border-style: solid;
+    border-width: 5;
+    border-color:#019858;
+    border-radius:5;
+  }
+</style>

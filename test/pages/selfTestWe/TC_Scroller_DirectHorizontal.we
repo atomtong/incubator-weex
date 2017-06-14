@@ -1,0 +1,75 @@
+<template>
+  <scroller>
+    <TC_Support_MainTitle title="TC_Scroller_DirectHorizontal"></TC_Support_MainTitle>
+    <TC_Support_SubTitle title="01.Image"></TC_Support_SubTitle>
+    <scroller class="horizontal" scroll-direction="horizontal">
+      <image class="img" src="https://gd2.alicdn.com/imgextra/i2/TB1ThbXIVXXXXbNXFXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg"></image>
+      <image class="img" src="https://gd2.alicdn.com/imgextra/i2/TB1ThbXIVXXXXbNXFXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg"></image>
+      <image class="img" src="https://gd2.alicdn.com/imgextra/i2/TB1ThbXIVXXXXbNXFXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg"></image>
+    </scroller>
+
+    <TC_Support_SubTitle title="02.Text"></TC_Support_SubTitle>
+    <scroller class="horizontal" scroll-direction="horizontal">
+      <text class="text">{{longText}}</text>
+      <text class="text">{{longText}}</text>
+      <text class="text">{{longText}}</text>
+    </scroller>
+
+    <TC_Support_SubTitle title="03.Div"></TC_Support_SubTitle>
+    <scroller class="horizontal" scroll-direction="horizontal">
+      <div class="div"></div>
+      <div class="div"></div>
+      <div class="div"></div>
+    </scroller>
+
+    <TC_Support_SubTitle title="03.mixture"></TC_Support_SubTitle>
+    <scroller class="horizontal" scroll-direction="horizontal">
+      <image class="img" src="https://gd2.alicdn.com/imgextra/i2/TB1ThbXIVXXXXbNXFXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg"></image>
+      <text class="text">{{longText}}</text>
+      <div class="div"></div>
+    </scroller>
+
+  </scroller>
+</template>
+
+<style>
+  .horizontal {
+    flex-direction: row;
+    width: 500;
+    height: 240;
+    background-color: #DDDDDD;
+    border: 5;
+    border-style: solid;
+    border-color: #FFCC66;
+    margin: 20;
+  }
+
+  .img {
+    width: 400;
+    height: 200;
+    margin: 20;
+  }
+  .text {
+    font-size: 30;
+    width: 400;
+    background-color: #00FF00;
+    margin: 20;
+  }
+  .div {
+    width: 400;
+    height: 200;
+    background-color: #FF0000;
+    margin: 20;
+  }
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      imageUrl: '',
+      longText: 'text text text text text text text'
+    },
+    methods: {
+    }
+  }
+</script>

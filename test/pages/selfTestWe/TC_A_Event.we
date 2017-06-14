@@ -1,0 +1,86 @@
+<template>
+  <TC_Support_Scroller>
+    <TC_Support_MainTitle title="TC_A_Event"></TC_Support_MainTitle>
+    <div class="div">
+      <TC_Support_SubTitle title="01.Click and jump to href addr"></TC_Support_SubTitle>
+      <a class="ahref" href={{href}}><text class="font">Hello Weex</text></a>
+    </div>
+    
+    <div class="div">
+      <TC_Support_SubTitle title="02.Set no href"></TC_Support_SubTitle>
+      <a class="ahref"></a>
+    </div>
+    
+    <div class="div">
+      <TC_Support_SubTitle title="03.Set invalid href"></TC_Support_SubTitle>
+      <a class="ahref" href={{invalidHref}}><text class="font">{{invalidHref}}</text></a>
+    </div>    
+  </TC_Support_Scroller>
+</template>
+
+<style>
+  .font{font-family: Times New Roman;font-size: 30;}
+
+  .div {
+    margin-top:5;
+    margin-left:5;
+    margin-right:5;
+    border-width: 2;
+    border-style:solid;
+    border-color: #123456;
+  }
+
+  .title {
+    background-color: #CC99FF;
+    height: 50;
+    font-weight: bold;
+    font-size: 36;
+  }
+  
+  .ahref {
+    height:120;
+    width:400;
+    margin: 5;
+    font-size: 30;
+    background-color: #99FFCC;
+    justify-content:center;
+  }
+</style>
+
+<script>
+  module.exports = {
+    data:{
+      href: '',
+      invalidHref: 'error'
+    },
+    methods: {
+      ready: function () {
+        // config
+        var appConfig;
+        this.$getConfig(function (config) {
+            appConfig = config;
+        }.bind(this));
+
+        var bundleUrl = appConfig.bundleUrl;
+        var _appName = appConfig.env.appName;
+        
+        var lastIndex = bundleUrl.lastIndexOf('build/');
+        if(lastIndex<0){
+          var message = "链接无法识别～";
+          var okTitle = "确 定";
+          var params = {
+            'message':message,
+            'okTitle':okTitle,
+          }
+          this.$call('modal','alert',params);
+          return;
+        }
+
+        var transferUrl = bundleUrl.substring(0,lastIndex + 6)+"TC_Color_Type.js";
+        // this.$call('modal', 'toast', {'message':transferUrl, 'duration':2})
+        this.href = transferUrl
+
+      },
+    }
+  }
+</script>

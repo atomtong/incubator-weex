@@ -1,0 +1,78 @@
+<template>
+  <TC_Support_Scroller>
+    <TC_Support_MainTitle title="TC_InterAct_SetInterval"></TC_Support_MainTitle>
+    <div class="banner">
+      <text class="margin font">countdown:</text><text class="margin font">{{endtime}} s</text>
+    </div>
+    <div repeat="btnList" style="flex-direction:row">
+        <text onclick="update" flagid="{{index}}" repeat="row" style="width:230; height:50;text-align: center; border-width: 1;border-color: #696969;border-style:solid;border-radius:5; margin:10; background-color: {{bgc}}">{{value}}</text>
+    </div>
+  </TC_Support_Scroller>
+</template>
+
+
+<style>
+    .banner {flex-direction: row;align-items: center;width: 750;}
+    .margin{margin: 10}
+    .font{font-family: Times New Roman;font-size: 30;}
+</style>
+
+<script>
+  var timer;
+  module.exports = {
+    data: {
+      endtime: 5000,
+      btnList: [
+        {
+            row:
+            [
+                {value: "start",bgc:'#EEEEEE',index:0},
+                {value: "stop",bgc:'#EEEEEE',index:1},
+            ],
+        },
+      ],
+    },
+    methods: {
+      ready: function(){
+        
+      },
+      start:function(){
+        timer = setInterval(this.action.bind(this), 1000)
+        
+      },
+      stop: function(){
+        clearInterval(timer)
+      },
+      action:function(){
+        this.endtime=this.endtime-1;
+      },
+      update: function (e) {
+        var self = this
+        var index = e.target.attr.flagid
+        for (var i = 0; i < self.btnList.length; i++) {
+            var row=self.btnList[i];
+            var columnlist=row.row;
+            for (var j = 0; j < columnlist.length; j++) {
+                var column=columnlist[j];
+                if (column.index === index) {
+                    column.bgc = '#B2DFEE'
+                    switch (index) {
+                        case 0:
+                            self.start();
+                            break;
+                        case 1:
+                            self.stop();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else {
+                    column.bgc = '#EEEEEE'
+                }
+            }
+        }
+      },
+    }
+  }
+</script>

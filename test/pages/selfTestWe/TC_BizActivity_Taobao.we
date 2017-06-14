@@ -1,0 +1,198 @@
+<template>
+  <div style="flex-direction: column;">
+    <div class="title-div">
+      <text class="title font">手淘业务列表</text>
+    </div>
+
+    <list class="list">
+      <cell repeat="{{script_list}}" append="tree">
+        <div onclick="redirect" link="{{link}}">
+          <div class="list-cell-div">
+            <text class="list-cell-link font" onclick="redirect" link="{{link}}">{{desc}}</text>
+          </div>
+          <div class="div-split"></div>
+        </div>
+      </cell>
+    </list>
+  </div>
+</template>
+ 
+<style>
+  .list{width: 750;border-width: 1;border-color: #eeeeee;flex-direction: column;overflow: hidden;}
+  .title-div {background-color: #66CDAA;height: 66 ; padding-bottom: 10}
+  .title{font-weight: bold;font-size: 36;margin-top:15;margin-left: 5; text-align: center;}
+  .font{font-family: Times New Roman;}
+  .list-cell-div{flex-direction: column;background-color:#ffffff;justify-content:center; height: 80; padding-left: 20; background-color: #ffffff; }
+  .list-cell-link{ font-size: 50;text-decoration: underline; color: #33a3dc;}
+  .div-split{height: 1; border-width: 1; border-style:dashed; border-color: #375830;}
+</style>
+
+<script>
+  module.exports = {
+    data: {
+      script_list: [
+  {
+    "desc": "微淘首页",
+    "link": "https://h5.m.taobao.com/we/index.htm"
+  },
+  {
+    "desc": "女神范（南筠）",
+    "link": "http://h5.m.taobao.com/app/crowd/www/index-wx/index.html?groupId=8&_wx_tpl=http://h5.m.taobao.com/app/crowd/www/js/p_index-wx_index.js"
+  },
+  {
+    "desc": "社区-问答详情",
+    "link": "http://h5.m.taobao.com/ocean/qaDetail.htm?questionId=4445128756"
+  },
+  {
+    "desc": "社区-圈子首页",
+    "link": "http://h5.m.taobao.com/ocean/community.htm?communityId=23005"
+  },
+  {
+    "desc": "必买清单",
+    "link": "http://h5.m.taobao.com/buy/qingdan/detail.html?qdId=1000360000000508229&_wx_tpl=//h5.m.taobao.com/buy/qingdan/weex_detail.js"
+  },
+  {
+    "desc": "支付成功页",
+    "link": "http://h5.m.taobao.com/app/trade/paysuc.html?_wx_tpl=http://h5.m.taobao.com/app/trade/c/downgrade.js&orderIds=2841014082399084"
+  },
+  {
+    "desc": "淘我要-全球播报首页（言沛）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/broadcast/entry-min.js"
+  },
+  {
+    "desc": "淘我要-搜索页（之君）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/search/entry-min.js"
+  },
+  {
+    "desc": "淘我要-搜索页2（之君）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/searchInTwy/entry-min.js"
+  },
+  {
+    "desc": "淘我要-搜索结果页（之君）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/searchInTwyResult/entry-min.js&keyword=E"
+  },
+  {
+    "desc": "淘我要-品牌页（之君）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/searchInTwyAllResult/entry-min.js&keyword=c"
+  },
+  {
+    "desc": "淘我要-详情页（之君）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/broadcastDetail/entry-min.js&brandId=4382504"
+  },
+  {
+    "desc": "淘我要-bpu页（容隽）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/bpu/entry-min.js&bpuId=38953402"
+  },
+  {
+    "desc": "淘我要-我的（止其）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/mine/entry-min.js"
+  },
+  {
+    "desc": "淘我要-品牌搜索页（之君）",
+    "link": "http://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/askToBuyBrand/entry-min.js"
+  },
+  {
+    "desc": "淘我要-类目页（之君）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/askToBuyCategary/entry-min.js"
+  },
+  {
+    "desc": "淘我要-求购结果页（之君）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/askToBuyDetail/entry-min.js&picId=12761001&userId=2582611350"
+  },
+  {
+    "desc": "淘我要-达人推荐（容隽）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/darenRecommend/entry-min.js&bpuId=38957739"
+  },
+  {
+    "desc": "淘我要-我的心愿单（止其）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/mineWishlist/entry-min.js"
+  },
+  {
+    "desc": "淘我要-标签页（辰染）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/tag/entry-min.js"
+  },
+  {
+    "desc": "淘我要-标签详情页（辰染）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/tagDetail/entry-min.js"
+  },
+  {
+    "desc": "淘我要-标签播报页（之君）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/broadcastTagDetail/entry-min.js&tagId=1532836190"
+  },
+  {
+    "desc": "淘我要-买手现场（言沛）",
+    "link": "https://h5.m.taobao.com/need/weex/container.html?_wx_tpl=https://g.alicdn.com/mtb/need-weex/p/buyerlive/entry-min.js"
+  },
+  {
+    "desc": "我的淘宝-更多工具",
+    "link": "https://h5.m.taobao.com/?_wx_tpl=http://h5.m.taobao.com/app/mytaobaorx/www/js/p_allApps_index.js"
+  },
+  {
+    "desc": "直播-关注列表(影逸)",
+    "link": "https://pages.tmall.com/wow/mt/act/live-follow-list?wh_weex=true"
+  },
+  {
+    "desc": "直播-预告页面(影逸)",
+    "link": "https://pages.tmall.com/wow/mt/act/live-pre?wh_weex=true&feedId=200133151013"
+  },
+  {
+    "desc": "ifashion首页",
+    "link": "http://h5.m.taobao.com/app/wxifashion/www/discover/index.html?_wx_tpl=http://h5.m.taobao.com/app/wxifashion/www/js/p_discover_index.js"
+  },
+  {
+    "desc": "ifashion直播页",
+    "link": "http://h5.m.taobao.com/app/wxifashion/www/live/index.html?_wx_tpl=http://h5.m.taobao.com/app/wxifashion/www/js/p_live_index.js"
+  },
+  {
+    "desc": "ifashion潮报",
+    "link": "http://h5.m.taobao.com/app/wxifashion/www/chao-bao-list/index.html?_wx_tpl=http://h5.m.taobao.com/app/wxifashion/www/js/p_chao-bao-list_index.js"
+  },
+  {
+    "desc": "ifashion尖货",
+    "link": "http://h5.m.taobao.com/app/wxifashion/www/jian/index.html?_wx_tpl=http://h5.m.taobao.com/app/wxifashion/www/js/p_jian_index.js"
+  },
+  {
+    "desc": "ifashion搭配",
+    "link": "http://h5.m.taobao.com/app/wxifashion/www/dapei/index.html?_wx_tpl=http://h5.m.taobao.com/app/wxifashion/www/js/p_dapei_index.js"
+  },
+  {
+    "desc": "爱逛街",
+    "link": "https://h5.m.taobao.com/app/guangweb/www/index.html?_wx_tpl=//h5.m.taobao.com/app/guangweb/www/js/p_home_index.js"
+  },
+  {
+    "desc": "微淘优质账号",
+    "link": "http://h5.m.taobao.com/weitao-h5/accountlist.html?_wx_tpl=http://g.alicdn.com/sanwant/weitao-h5/0.0.8/accountlist.bundle.js"
+  },
+  {
+    "desc": "卡券包",
+    "link": "https://h5.m.taobao.com/app/cpkg/portal.html"
+  },
+  {
+    "desc": "领券页",
+    "link": "http://h5.m.taobao.com/app/coudetail/www/detail.html?activityId=0fa75305aa4444d29706b889c5cc7906&sellerId=2548224779"
+  },
+  {
+    "desc": "淘抢购",
+    "pv": "10000000",
+    "link": "https://m.taobao.com/go/QiangGou"
+  },
+  {
+    "desc": "天猫首页",
+    "pv": "111111111",
+    "link": "https://pages.tmall.com/wow/portal/act/fpmw6?wh_weex=true&wh_from=tbc"
+  },
+  {
+    "desc": "我的淘宝-换肤(师影)",
+    "pv": "111111111",
+    "link": "http://h5.m.taobao.com/app/skin/detail/detail.html?skinCode=skin_sea&_wx_tpl=https://h5.m.taobao.com/app/skin/detail/entry-min.js&spm=a21t2.8270924.guessitem.1"
+  }
+]
+    },
+    methods: {
+      redirect: function (e) {
+        var link = e.target.attr.link ;
+        this.$openURL(link);
+      },
+    }
+  }
+</script>

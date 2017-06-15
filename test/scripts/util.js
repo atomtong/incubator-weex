@@ -22,16 +22,11 @@ var path = require('path');
 var os = require('os')
 var fs = require('fs')
 const BlinkDiff = require('blink-diff');
-var shell = require('shelljs')
-// var urlencode = require('urlencode');
-
 
 var platform = process.env.platform || 'android';
+const servePort = process.env.serport || 12581
 platform = platform.toLowerCase();
 var browser = process.env.browser || '';
-var androidTBEvn = true
-var renderTBAndroidCmd = 'adb shell am start -W -n com.taobao.taobao/com.taobao.browser.BrowserActivity -d ' 
-
 
 const isIOS = platform === 'ios';
 const isRunInCI = process.env.run_in_ci?true:false;
@@ -49,16 +44,6 @@ var androidOpts = {
   target: 'android',
   slowEnv: isRunInCI,
   app: path.join(__dirname, '..', '../android/playground/app/build/outputs/apk/playground-debug.apk')
-};
-
-var androidTBOpts = {
-  reuse:3,
-  package:'com.taobao.taobao',
-  activity:'com.taobao.browser.BrowserActivity',
-  platformName: 'Android',
-  target: 'android',
-  slowEnv: isRunInCI,
-  app: 'http://mtl.alibaba-inc.com/oss/mupp/47035/2381911/2381911/774a0a16c729679f8adec24081e225da/600000@taobao_android_6.8.0.apk'
 };
 
 var androidChromeOpts = {
@@ -121,35 +106,17 @@ module.exports = {
         if(browser){
             return androidChromeOpts;
         }
-        else if(androidTBEvn){
-            return androidTBOpts;
-        }
         return isIOS? iOSOpts : androidOpts;
     },
     getDeviceHost:function(){
         return getIpAddress()+":12581";
     },
-
-    getPageFormApp:function(page){
-        let url
-        if(androidTBEvn){
-            url = this.getPage(page)
-            renderTBAndroidCmd = renderTBAndroidCmd + url
-            console.log('renderCmd==' + renderTBAndroidCmd)
-            shell.exec(renderTBAndroidCmd)
-        }
-    },
-
     getPage:function(name){
         let url
         if(browser){
-             url = 'http://'+ getIpAddress()+':12581/vue.html?page=/test/build-web'+name
-        }
-        else if(androidTBEvn){
-            url = 'http://h5.m.taobao.com?_wx_tpl=http://' + getIpAddress()+":12581/test/build"+name;
-        }
-        else{
-            url = 'wxpage://' + getIpAddress()+":12581/test/build"+name;
+             url = 'http://'+ getIpAddress()+':'+servePort+'/vue.html?page=/test/build-web'+name
+        }else{
+            url = 'wxpage://' + getIpAddress()+":"+servePort+"/test/build"+name;
         }
         console.log(url)
         return url

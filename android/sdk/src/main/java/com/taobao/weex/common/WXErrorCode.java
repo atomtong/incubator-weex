@@ -129,7 +129,6 @@ public enum WXErrorCode {
   /**
    * JS Framework run error
    */
-  WX_ERR_JS_FRAMEWORK_INIT_TIME_EXCEPTION("-1001", "js framework init time out > 5000"),
   WX_ERR_JS_FRAMEWORK("-1002", "js framework error");
 
   private String errorCode;

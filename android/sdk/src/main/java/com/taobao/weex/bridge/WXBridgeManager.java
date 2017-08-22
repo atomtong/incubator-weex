@@ -1368,10 +1368,24 @@ public class WXBridgeManager implements Callback,BactchExecutor {
         }
 
         long start = System.currentTimeMillis();
+
         if(mWXBridge.initFramework(framework, assembleDefaultOptions())==INIT_FRAMEWORK_OK){
-          WXEnvironment.sJSLibInitTime = System.currentTimeMillis() - start;
+		  WXEnvironment.sJSLibInitTime = System.currentTimeMillis() - start;
           WXLogUtils.renderPerformanceLog("initFramework", WXEnvironment.sJSLibInitTime);
-          WXEnvironment.sSDKInitTime = System.currentTimeMillis() - WXEnvironment.sSDKInitStart;
+
+		  long  endSDKInitTime = System.currentTimeMillis();
+		  WXEnvironment.sSDKInitTime = endSDKInitTime - WXEnvironment.sSDKInitStart;
+
+          if(WXEnvironment.sSDKInitTime > 5000 || WXEnvironment.sSDKInitTime < 0){
+			String errMsg = "[WXBridgeManager] initSDK  initSDKTime exceptional" + "|" +
+					"startTime is " + WXEnvironment.sSDKInitStart + "|" +
+					"endSDKInitTime is " + endSDKInitTime + "|" +
+					"sSDKInitTime is " + WXEnvironment.sSDKInitTime +"|" +
+					"WXEnvironment fileds are " + JSON.toJSONString(WXEnvironment.class);
+            WXLogUtils.e(errMsg);
+			commitJSFrameworkAlarmMonitor(IWXUserTrackAdapter.JS_FRAMEWORK,
+					WXErrorCode.WX_ERR_JS_FRAMEWORK_INIT_TIME_EXCEPTION, errMsg);
+          }
           WXLogUtils.renderPerformanceLog("SDKInitTime", WXEnvironment.sSDKInitTime);
           mInit = true;
 

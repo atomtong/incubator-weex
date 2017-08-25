@@ -1525,8 +1525,8 @@ public class WXBridgeManager implements Callback,BactchExecutor {
 					"startTime is " + WXEnvironment.sSDKInitStart + "|" +
 					"endSDKInitTime is " + endSDKInitTime + "|" +
 					"sSDKInitTime is " + WXEnvironment.sSDKInitTime +"|" +
-					"WXEnvironment fileds are " + JSON.toJSONString(WXEnvironment.class);
-            WXLogUtils.e(errMsg);
+					"WXEnvironment fileds are " + JSON.toJSONString(WXEnvironment.getConfig());
+            WXLogUtils.d(errMsg);
 			commitJSFrameworkAlarmMonitor(IWXUserTrackAdapter.JS_FRAMEWORK,
 					WXErrorCode.WX_ERR_JS_FRAMEWORK_INIT_TIME_EXCEPTION, errMsg);
           }

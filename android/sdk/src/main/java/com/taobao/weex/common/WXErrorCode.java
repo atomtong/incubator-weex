@@ -141,7 +141,9 @@ public enum WXErrorCode {
    */
   WX_ERR_JS_FRAMEWORK("-1002", "js framework error"),
 
-  WX_ERR_JS_REINIT_FRAMEWORK("-1003", "js reinit framework error");
+  WX_ERR_JS_REINIT_FRAMEWORK("-1003", "js reinit framework error"),
+
+  WX_ERR_JS_FRAMEWORK_INIT_TIME_EXCEPTION("-1004", "js framework init time exception");
 
   private String errorCode;
   private String errorMsg;

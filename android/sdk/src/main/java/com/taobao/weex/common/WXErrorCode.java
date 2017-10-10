@@ -124,6 +124,12 @@ public enum WXErrorCode {
    */
   WX_ERR_JSC_CRASH("-2112", "weexjscCrash"),
 
+
+  /**
+   * createFinish Error ,createBody may be not called before call createFinish
+   */
+  WX_ERROR_CREATE_FINISH_EXCEPTION("-2113", "createFinish Error ,createBody may be not called before call createFinish"),
+
   /**
    * JS Bundle download error
    */

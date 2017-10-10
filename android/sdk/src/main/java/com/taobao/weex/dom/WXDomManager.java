@@ -23,7 +23,10 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 
 import com.taobao.weex.WXEnvironment;
+import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.WXSDKManager;
+import com.taobao.weex.adapter.IWXJSExceptionAdapter;
+import com.taobao.weex.common.WXJSExceptionInfo;
 import com.taobao.weex.common.WXRuntimeException;
 import com.taobao.weex.common.WXThread;
 import com.taobao.weex.dom.action.AbstractAddElementAction;
@@ -31,12 +34,15 @@ import com.taobao.weex.dom.action.TraceableAction;
 import com.taobao.weex.tracing.Stopwatch;
 import com.taobao.weex.tracing.WXTracing;
 import com.taobao.weex.ui.WXRenderManager;
+import com.taobao.weex.utils.WXLogUtils;
 import com.taobao.weex.utils.WXUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.taobao.weex.common.WXErrorCode.WX_ERROR_CREATE_FINISH_EXCEPTION;
 
 /**
  * Class for managing dom operation. This class works as the client in the command pattern, it
@@ -160,7 +166,19 @@ public final class WXDomManager {
         mDomRegistries.put(instanceId, oldStatement);
         context = oldStatement;
       }else{
-        //Instance not existed.
+        WXLogUtils.e("Instance not existed,createBody may be not called before call createFinish");
+
+        WXSDKInstance instance = WXSDKManager.getInstance().getSDKInstance(instanceId);
+        IWXJSExceptionAdapter adapter = WXSDKManager.getInstance().getIWXJSExceptionAdapter();
+        String bundleULR = "Weex_Default";
+        if (adapter != null) {
+          if(instance !=null){
+            bundleULR = instance.getBundleUrl();
+          }
+          WXJSExceptionInfo jsException = new WXJSExceptionInfo(instanceId, bundleULR, WX_ERROR_CREATE_FINISH_EXCEPTION.getErrorCode(), null, WX_ERROR_CREATE_FINISH_EXCEPTION.getErrorMsg(), null);
+          adapter.onJSException(jsException);
+          WXLogUtils.e(jsException.toString());
+        }
         return;
       }
     }
